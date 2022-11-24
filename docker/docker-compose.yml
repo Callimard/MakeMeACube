@@ -1,0 +1,16 @@
+version: "3.9"
+name: "Print me a cube"
+services:
+  printmeacube-mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_USER: "printmeacube-admin"
+      MYSQL_PASSWORD: "5gQ60AsRB9QbL5rA"
+      MYSQL_ROOT_PASSWORD: "t1KEMbMEWX8urV1K"
+    ports:
+      - "3306:3306"
+    volumes:
+      - printmeacube-mysql:/var/lib/mysql
+volumes:
+  printmeacube-mysql:
+    external: true
