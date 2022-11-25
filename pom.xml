@@ -3,6 +3,13 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>entities</module>
+        <module>authentication</module>
+        <module>jwt</module>
+        <module>api</module>
+        <module>configuration-service</module>
+        <module>discovery-service</module>
+        <module>proxy-service</module>
+        <module>common</module>
     </modules>
 
     <parent>
@@ -32,30 +39,64 @@
     <dependencyManagement>
         <dependencies>
 
-          <!-- Google Guava -->
-          <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>31.1-jre</version>
-          </dependency>
+            <!-- Intern -->
 
-          <!-- Spring -->
+            <dependency>
+                <groupId>org.callimard.printmeacube</groupId>
+                <artifactId>jwt</artifactId>
+                <version>dev-SNAPSHOT</version>
+            </dependency>
 
-          <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>${spring-cloud.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-          </dependency>
+            <dependency>
+                <groupId>org.callimard.printmeacube</groupId>
+                <artifactId>entities</artifactId>
+                <version>dev-SNAPSHOT</version>
+            </dependency>
 
-          <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-dependencies</artifactId>
-            <type>pom</type>
-            <version>${spring-boot.version}</version>
-            <scope>import</scope>
-          </dependency>
+            <dependency>
+                <groupId>org.callimard.printmeacube</groupId>
+                <artifactId>api</artifactId>
+                <version>dev-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.callimard.printmeacube</groupId>
+                <artifactId>common</artifactId>
+                <version>dev-SNAPSHOT</version>
+            </dependency>
+
+            <!-- JWT Auth0 -->
+
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+
+            <!-- Google Guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>31.1-jre</version>
+            </dependency>
+
+            <!-- Spring -->
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <type>pom</type>
+                <version>${spring-boot.version}</version>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

@@ -7,30 +7,54 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>entities</artifactId>
+    <artifactId>jwt</artifactId>
     <packaging>jar</packaging>
 
-    <name>entities</name>
-    <url>http://maven.apache.org</url>
-
+    <name>jwt</name>
     <properties>
-        <java.version>19</java.version>
+        <maven.compiler.source>19</maven.compiler.source>
+        <maven.compiler.target>19</maven.compiler.target>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
 
-        <!-- Spring jdbc and JPA -->
+        <!-- Intern -->
+
+        <dependency>
+            <groupId>org.callimard.printmeacube</groupId>
+            <artifactId>entities</artifactId>
+        </dependency>
+
+        <!-- JWT Auth0 -->
+
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+        </dependency>
+
+        <!-- Spring -->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
 
         <!-- Lombok -->
@@ -41,7 +65,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- Google Guava -->
+        <!-- Google guava -->
 
         <dependency>
             <groupId>com.google.guava</groupId>

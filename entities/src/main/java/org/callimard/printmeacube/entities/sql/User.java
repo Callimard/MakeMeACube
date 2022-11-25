@@ -1,10 +1,10 @@
-package org.callimard.printmeacube.entities;
+package org.callimard.printmeacube.entities.sql;
 
 import com.google.common.base.Objects;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @Setter
@@ -72,7 +72,7 @@ public class User {
     private String provider;
 
     @Column(name = USER_CREATION_DATE, nullable = false)
-    private LocalDateTime creationDate;
+    private Instant creationDate;
 
     // Methods.
 
