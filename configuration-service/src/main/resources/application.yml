@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: configuration-service
+  cloud:
+    config:
+      server:
+        git:
+          uri: file:///${user.home}/Printmeacube/configurations
+server:
+  port: 8888
+

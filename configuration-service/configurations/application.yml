@@ -1,0 +1,11 @@
+server:
+  error:
+    include-message: always
+
+logging:
+  level:
+    root: DEBUG
+
+jwt:
+  secret: 4yh7zIam9FlUZPOZDvyGTQM72JLR9fp1Lek
+  default-time-expiration: 95
