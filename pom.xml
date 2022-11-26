@@ -80,6 +80,14 @@
                 <version>31.1-jre</version>
             </dependency>
 
+            <!-- Apache commons -->
+
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>1.7</version>
+            </dependency>
+
             <!-- Spring -->
 
             <dependency>
