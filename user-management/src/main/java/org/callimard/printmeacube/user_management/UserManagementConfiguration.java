@@ -1,4 +1,4 @@
-package org.callimard.printmeacube.authentication;
+package org.callimard.printmeacube.user_management;
 
 import lombok.RequiredArgsConstructor;
 import org.callimard.printmeacube.ApiV1;
@@ -7,6 +7,7 @@ import org.callimard.printmeacube.entities.EntitiesConfiguration;
 import org.callimard.printmeacube.jwt.JwtAuthenticationProvider;
 import org.callimard.printmeacube.jwt.JwtCompanyAuthenticationDSL;
 import org.callimard.printmeacube.jwt.JwtConfiguration;
+import org.callimard.printmeacube.user_management.authentication.BasicAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -18,7 +19,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 @Configuration
 @Import({JwtConfiguration.class, EntitiesConfiguration.class, CommonConfiguration.class})
-public class AuthenticationConfiguration {
+public class UserManagementConfiguration {
 
     // Variables.
 

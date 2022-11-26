@@ -21,6 +21,13 @@
 
     <dependencies>
 
+        <!-- Intern -->
+
+        <dependency>
+            <groupId>org.callimard.printmeacube</groupId>
+            <artifactId>common</artifactId>
+        </dependency>
+
         <!-- Spring jdbc and JPA -->
 
         <dependency>

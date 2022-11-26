@@ -1,4 +1,4 @@
-package org.callimard.printmeacube.authentication;
+package org.callimard.printmeacube.user_management.authentication;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
