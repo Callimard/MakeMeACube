@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          uri: file:///${user.home}/Printmeacube/configurations
+          uri: file:///${user.home}/Makemeacube/configurations
 server:
   port: 8888
 
