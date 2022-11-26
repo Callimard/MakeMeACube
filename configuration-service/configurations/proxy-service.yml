@@ -7,6 +7,10 @@ spring:
           lower-case-service-id: true
       routes:
         - id: authentication-route
-          uri: lb://authentication-service
+          uri: lb://user-management-service
           predicates:
             - Path=/api/v1/authentication/**
+        - id: user-registration-route
+          uri: lb://user-management-service
+          predicates:
+            - Path=/api/v1/users/**

@@ -2,6 +2,9 @@ package org.callimard.printmeacube.entities.sql;
 
 import com.google.common.base.Objects;
 import lombok.*;
+import org.callimard.printmeacube.common.RegistrationProvider;
+import org.callimard.printmeacube.entities.dto.DTOSerializable;
+import org.callimard.printmeacube.entities.dto.UserDTO;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -13,7 +16,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Entity
 @Table(name = "User")
-public class User {
+public class User implements DTOSerializable<UserDTO> {
 
     // Constants.
 
@@ -69,12 +72,23 @@ public class User {
     private Boolean isPrinter;
 
     @Column(name = USER_PROVIDER, nullable = false)
-    private String provider;
+    private RegistrationProvider provider;
 
     @Column(name = USER_CREATION_DATE, nullable = false)
     private Instant creationDate;
 
+    // Constructors.
+
+    public User(@NonNull String mail, @NonNull String pseudo, @NonNull String password, RegistrationProvider provider, Instant creationDate) {
+        this(-1, mail, pseudo, password, null, null, null, null, null, null, false, provider, creationDate);
+    }
+
     // Methods.
+
+    @Override
+    public UserDTO toDTO() {
+        return new UserDTO(this);
+    }
 
     @Override
     public boolean equals(Object o) {

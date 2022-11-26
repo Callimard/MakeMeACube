@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <modules>
         <module>entities</module>
-        <module>authentication</module>
+        <module>user-management</module>
         <module>jwt</module>
         <module>api</module>
         <module>configuration-service</module>
@@ -78,6 +78,14 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>31.1-jre</version>
+            </dependency>
+
+            <!-- Apache commons -->
+
+            <dependency>
+                <groupId>commons-validator</groupId>
+                <artifactId>commons-validator</artifactId>
+                <version>1.7</version>
             </dependency>
 
             <!-- Spring -->

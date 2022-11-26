@@ -1,13 +1,13 @@
-package org.callimard.printmeacube.authentication;
+package org.callimard.printmeacube.user_management;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AuthenticationServiceApplication {
+public class UserManagementServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AuthenticationServiceApplication.class, args);
+        SpringApplication.run(UserManagementServiceApplication.class, args);
     }
 
 }
