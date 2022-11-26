@@ -1,6 +1,7 @@
 package org.callimard.makemeacube.entities.sql;
 
 import com.google.common.base.Objects;
+import com.google.common.collect.Lists;
 import lombok.*;
 import org.callimard.makemeacube.common.RegistrationProvider;
 import org.callimard.makemeacube.entities.dto.DTOSerializable;
@@ -8,6 +9,7 @@ import org.callimard.makemeacube.entities.dto.UserDTO;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,6 +33,7 @@ public class User implements DTOSerializable<UserDTO> {
     public static final String USER_COUNTRY = "country";
     public static final String USER_PHONE = "phone";
     public static final String USER_IS_MAKER = "isMaker";
+    public static final String USER_MAKER_DESCRIPTION = "makerDescription";
     public static final String USER_PROVIDER = "provider";
     public static final String USER_CREATION_DATE = "creationDate";
 
@@ -71,6 +74,13 @@ public class User implements DTOSerializable<UserDTO> {
     @Column(name = USER_IS_MAKER, nullable = false)
     private Boolean isMaker;
 
+    @Column(name = USER_MAKER_DESCRIPTION)
+    private String makerDescription;
+
+    @ToString.Exclude
+    @OneToMany(targetEntity = MakerTool.class, mappedBy = MakerTool.MAKER_TOOL_OWNER)
+    private List<MakerTool> tools = Lists.newArrayList();
+
     @Column(name = USER_PROVIDER, nullable = false)
     private RegistrationProvider provider;
 
@@ -80,7 +90,7 @@ public class User implements DTOSerializable<UserDTO> {
     // Constructors.
 
     public User(@NonNull String mail, @NonNull String pseudo, @NonNull String password, RegistrationProvider provider, Instant creationDate) {
-        this(-1, mail, pseudo, password, null, null, null, null, null, null, false, provider, creationDate);
+        this(-1, mail, pseudo, password, null, null, null, null, null, null, false, null, Lists.newArrayList(), provider, creationDate);
     }
 
     // Methods.
