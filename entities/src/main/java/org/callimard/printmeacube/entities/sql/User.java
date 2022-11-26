@@ -77,6 +77,12 @@ public class User implements DTOSerializable<UserDTO> {
     @Column(name = USER_CREATION_DATE, nullable = false)
     private Instant creationDate;
 
+    // Constructors.
+
+    public User(@NonNull String mail, @NonNull String pseudo, @NonNull String password, RegistrationProvider provider, Instant creationDate) {
+        this(-1, mail, pseudo, password, null, null, null, null, null, null, false, provider, creationDate);
+    }
+
     // Methods.
 
     @Override
