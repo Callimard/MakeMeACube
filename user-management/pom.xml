@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>PrintMeACube</artifactId>
-        <groupId>org.callimard.printmeacube</groupId>
+        <artifactId>makemeacube</artifactId>
+        <groupId>org.callimard.makemeacube</groupId>
         <version>dev-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -24,22 +24,22 @@
         <!-- Intern -->
 
         <dependency>
-            <groupId>org.callimard.printmeacube</groupId>
+            <groupId>org.callimard.makemeacube</groupId>
             <artifactId>jwt</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.callimard.printmeacube</groupId>
+            <groupId>org.callimard.makemeacube</groupId>
             <artifactId>entities</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.callimard.printmeacube</groupId>
+            <groupId>org.callimard.makemeacube</groupId>
             <artifactId>api</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>org.callimard.printmeacube</groupId>
+            <groupId>org.callimard.makemeacube</groupId>
             <artifactId>common</artifactId>
         </dependency>
 

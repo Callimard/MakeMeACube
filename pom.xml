@@ -19,12 +19,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>org.callimard.printmeacube</groupId>
-    <artifactId>PrintMeACube</artifactId>
+    <groupId>org.callimard.makemeacube</groupId>
+    <artifactId>makemeacube</artifactId>
     <version>dev-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Print me a cube</name>
+    <name>Make me a cube</name>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
@@ -42,25 +42,25 @@
             <!-- Intern -->
 
             <dependency>
-                <groupId>org.callimard.printmeacube</groupId>
+                <groupId>org.callimard.makemeacube</groupId>
                 <artifactId>jwt</artifactId>
                 <version>dev-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.callimard.printmeacube</groupId>
+                <groupId>org.callimard.makemeacube</groupId>
                 <artifactId>entities</artifactId>
                 <version>dev-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.callimard.printmeacube</groupId>
+                <groupId>org.callimard.makemeacube</groupId>
                 <artifactId>api</artifactId>
                 <version>dev-SNAPSHOT</version>
             </dependency>
 
             <dependency>
-                <groupId>org.callimard.printmeacube</groupId>
+                <groupId>org.callimard.makemeacube</groupId>
                 <artifactId>common</artifactId>
                 <version>dev-SNAPSHOT</version>
             </dependency>
