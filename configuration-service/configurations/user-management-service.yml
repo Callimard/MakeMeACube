@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/printmeacube
+    url: jdbc:mysql://localhost:3306/makemeacube
     username: root
     password: t1KEMbMEWX8urV1K
     driver-class-name: com.mysql.cj.jdbc.Driver

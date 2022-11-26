@@ -30,7 +30,7 @@ public class User implements DTOSerializable<UserDTO> {
     public static final String USER_CITY = "city";
     public static final String USER_COUNTRY = "country";
     public static final String USER_PHONE = "phone";
-    public static final String USER_IS_PRINTER = "isPrinter";
+    public static final String USER_IS_MAKER = "isMaker";
     public static final String USER_PROVIDER = "provider";
     public static final String USER_CREATION_DATE = "creationDate";
 
@@ -68,8 +68,8 @@ public class User implements DTOSerializable<UserDTO> {
     @Column(name = USER_PHONE)
     private String phone;
 
-    @Column(name = USER_IS_PRINTER, nullable = false)
-    private Boolean isPrinter;
+    @Column(name = USER_IS_MAKER, nullable = false)
+    private Boolean isMaker;
 
     @Column(name = USER_PROVIDER, nullable = false)
     private RegistrationProvider provider;
@@ -98,11 +98,11 @@ public class User implements DTOSerializable<UserDTO> {
                 Objects.equal(password, user.password) && Objects.equal(firstName, user.firstName) &&
                 Objects.equal(lastName, user.lastName) && Objects.equal(address, user.address) &&
                 Objects.equal(city, user.city) && Objects.equal(country, user.country) &&
-                Objects.equal(phone, user.phone) && Objects.equal(isPrinter, user.isPrinter);
+                Objects.equal(phone, user.phone) && Objects.equal(isMaker, user.isMaker);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(mail, pseudo, password, firstName, lastName, address, city, country, phone, isPrinter);
+        return Objects.hashCode(mail, pseudo, password, firstName, lastName, address, city, country, phone, isMaker);
     }
 }
