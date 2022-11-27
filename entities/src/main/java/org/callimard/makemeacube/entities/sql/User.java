@@ -28,9 +28,6 @@ public class User implements DTOSerializable<UserDTO> {
     public static final String USER_PASSWORD = "password";
     public static final String USER_FIRST_NAME = "firstName";
     public static final String USER_LAST_NAME = "lastName";
-    public static final String USER_ADDRESS = "address";
-    public static final String USER_CITY = "city";
-    public static final String USER_COUNTRY = "country";
     public static final String USER_PHONE = "phone";
     public static final String USER_IS_MAKER = "isMaker";
     public static final String USER_MAKER_DESCRIPTION = "makerDescription";
@@ -59,14 +56,9 @@ public class User implements DTOSerializable<UserDTO> {
     @Column(name = USER_LAST_NAME)
     private String lastName;
 
-    @Column(name = USER_ADDRESS)
-    private String address;
-
-    @Column(name = USER_CITY)
-    private String city;
-
-    @Column(name = USER_COUNTRY)
-    private String country;
+    @ToString.Exclude
+    @OneToMany(targetEntity = UserAddress.class, mappedBy = UserAddress.USER_ADDRESS_USER)
+    private List<UserAddress> addresses = Lists.newArrayList();
 
     @Column(name = USER_PHONE)
     private String phone;
@@ -90,7 +82,7 @@ public class User implements DTOSerializable<UserDTO> {
     // Constructors.
 
     public User(@NonNull String mail, @NonNull String pseudo, @NonNull String password, RegistrationProvider provider, Instant creationDate) {
-        this(-1, mail, pseudo, password, null, null, null, null, null, null, false, null, Lists.newArrayList(), provider, creationDate);
+        this(-1, mail, pseudo, password, null, null, Lists.newArrayList(), null, false, null, Lists.newArrayList(), provider, creationDate);
     }
 
     // Methods.
@@ -106,13 +98,13 @@ public class User implements DTOSerializable<UserDTO> {
         if (!(o instanceof User user)) return false;
         return Objects.equal(mail, user.mail) && Objects.equal(pseudo, user.pseudo) &&
                 Objects.equal(password, user.password) && Objects.equal(firstName, user.firstName) &&
-                Objects.equal(lastName, user.lastName) && Objects.equal(address, user.address) &&
-                Objects.equal(city, user.city) && Objects.equal(country, user.country) &&
-                Objects.equal(phone, user.phone) && Objects.equal(isMaker, user.isMaker);
+                Objects.equal(lastName, user.lastName) && Objects.equal(addresses, user.addresses) &&
+                Objects.equal(phone, user.phone) && Objects.equal(isMaker, user.isMaker) &&
+                Objects.equal(makerDescription, user.makerDescription) && Objects.equal(tools, user.tools);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(mail, pseudo, password, firstName, lastName, address, city, country, phone, isMaker);
+        return Objects.hashCode(mail, pseudo, password, firstName, lastName, addresses, phone, isMaker, makerDescription, tools);
     }
 }
