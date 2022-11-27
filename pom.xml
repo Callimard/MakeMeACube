@@ -54,12 +54,6 @@
 
             <dependency>
                 <groupId>org.callimard.makemeacube</groupId>
-                <artifactId>api</artifactId>
-                <version>dev-SNAPSHOT</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.callimard.makemeacube</groupId>
                 <artifactId>common</artifactId>
                 <version>dev-SNAPSHOT</version>
             </dependency>
