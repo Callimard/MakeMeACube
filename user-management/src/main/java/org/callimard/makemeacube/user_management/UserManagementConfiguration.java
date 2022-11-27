@@ -49,6 +49,7 @@ public class UserManagementConfiguration {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers(HttpMethod.POST, ApiV1.USERS_URL + "/basic-registration").anonymous()
+                .antMatchers(HttpMethod.POST, ApiV1.USERS_URL + "/maker-registration").anonymous()
                 .antMatchers(HttpMethod.POST, ApiV1.AUTHENTICATION_URL + "/**").authenticated()
                 .anyRequest().denyAll();
 

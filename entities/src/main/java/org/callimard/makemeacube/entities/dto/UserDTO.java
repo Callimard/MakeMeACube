@@ -3,6 +3,8 @@ package org.callimard.makemeacube.entities.dto;
 import org.callimard.makemeacube.common.RegistrationProvider;
 import org.callimard.makemeacube.entities.sql.User;
 
+import java.util.List;
+
 /**
  * Constructs a DTO of a {@link User}. The {@link User#getPassword()} field is not present for security reason.
  *
@@ -11,19 +13,18 @@ import org.callimard.makemeacube.entities.sql.User;
  * @param pseudo
  * @param firstName
  * @param lastName
- * @param address
- * @param city
- * @param country
+ * @param addresses
  * @param phone
  * @param isMaker
  * @param provider
  * @param creationDate
  */
-public record UserDTO(int id, String mail, String pseudo, String firstName, String lastName, String address, String city,
-                      String country, String phone, boolean isMaker, RegistrationProvider provider, String creationDate) {
+public record UserDTO(int id, String mail, String pseudo, String firstName, String lastName, List<UserAddressDTO> addresses, String phone,
+                      boolean isMaker, String makerDescription, RegistrationProvider provider, String creationDate) {
 
     public UserDTO(User user) {
-        this(user.getId(), user.getMail(), user.getPseudo(), user.getFirstName(), user.getLastName(), user.getAddress(), user.getCity(),
-             user.getCountry(), user.getPhone(), user.getIsMaker(), user.getProvider(), user.getCreationDate().toString());
+        this(user.getId(), user.getMail(), user.getPseudo(), user.getFirstName(), user.getLastName(),
+             user.getAddresses().stream().map(UserAddressDTO::new).toList(), user.getPhone(), user.getIsMaker(), user.getMakerDescription(),
+             user.getProvider(), user.getCreationDate().toString());
     }
 }
