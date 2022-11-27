@@ -5,7 +5,6 @@
         <module>entities</module>
         <module>user-management</module>
         <module>jwt</module>
-        <module>api</module>
         <module>configuration-service</module>
         <module>discovery-service</module>
         <module>proxy-service</module>

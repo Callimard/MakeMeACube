@@ -2,7 +2,7 @@ package org.callimard.makemeacube.user_management.authentication;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
-import org.callimard.makemeacube.ApiV1;
+import org.callimard.makemeacube.common.api.ApiV1;
 import org.callimard.makemeacube.entities.sql.User;
 import org.callimard.makemeacube.jwt.JwtAccount;
 import org.callimard.makemeacube.jwt.JwtFactory;

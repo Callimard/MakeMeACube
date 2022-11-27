@@ -1,4 +1,4 @@
-package org.callimard.makemeacube;
+package org.callimard.makemeacube.common.api;
 
 public class ApiV1 {
 
