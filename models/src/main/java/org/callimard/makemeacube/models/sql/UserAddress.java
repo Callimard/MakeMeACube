@@ -1,9 +1,9 @@
-package org.callimard.makemeacube.entities.sql;
+package org.callimard.makemeacube.models.sql;
 
 import com.google.common.base.Objects;
 import lombok.*;
-import org.callimard.makemeacube.entities.dto.DTOSerializable;
-import org.callimard.makemeacube.entities.dto.UserAddressDTO;
+import org.callimard.makemeacube.models.dto.DTOSerializable;
+import org.callimard.makemeacube.models.dto.UserAddressDTO;
 
 import javax.persistence.*;
 

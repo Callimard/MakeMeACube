@@ -1,4 +1,4 @@
-package org.callimard.makemeacube.entities.sql;
+package org.callimard.makemeacube.models.sql;
 
 public class EntityNotFoundException extends RuntimeException{
 

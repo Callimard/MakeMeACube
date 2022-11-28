@@ -1,4 +1,4 @@
-package org.callimard.makemeacube.entities;
+package org.callimard.makemeacube.models;
 
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
 import org.springframework.context.annotation.ComponentScan;
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @AutoConfigurationPackage
-@ComponentScan("org.callimard.makemeacube.entities")
+@ComponentScan("org.callimard.makemeacube.models")
 @EnableJpaRepositories(enableDefaultTransactions = false)
 public class EntitiesConfiguration {
 }

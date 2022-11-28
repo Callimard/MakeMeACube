@@ -6,7 +6,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
-import org.callimard.makemeacube.entities.sql.User;
+import org.callimard.makemeacube.models.sql.User;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
