@@ -3,6 +3,9 @@ package org.callimard.makemeacube.user_management.registration;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import org.callimard.makemeacube.common.RegistrationProvider;
+import org.callimard.makemeacube.entities.aop.EntitySearchWithIdAspect;
+import org.callimard.makemeacube.entities.aop.SearchUsers;
+import org.callimard.makemeacube.entities.aop.UserId;
 import org.callimard.makemeacube.entities.sql.User;
 import org.callimard.makemeacube.entities.sql.UserAddress;
 import org.callimard.makemeacube.entities.sql.UserAddressRepository;
@@ -16,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Validated
@@ -29,12 +33,13 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     private final UserRepository userRepository;
     private final UserAddressRepository userAddressRepository;
 
+    private final EntitySearchWithIdAspect entitySearchWithIdAspect;
 
     // Methods.
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public User basicUserRegistration(@Valid BasicUserRegistrationDTO userInfo, @NotNull RegistrationProvider provider) {
+    public User basicUserRegistration(@NotNull @Valid BasicUserRegistrationDTO userInfo, @NotNull RegistrationProvider provider) {
         // TODO Manage the email verification
         var user = new User(userInfo.mail(), userInfo.pseudo(),
                             passwordEncoder.encode(userInfo.password()), provider, Instant.now());
@@ -43,7 +48,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
-    public User makerUserRegistration(MakerUserRegistrationDTO makerInfo, RegistrationProvider provider) {
+    public User makerUserRegistration(@NotNull @Valid MakerUserRegistrationDTO makerInfo, @NotNull RegistrationProvider provider) {
         // TODO Manage the email verification
         var user = createAndSaveUser(makerInfo);
         UserAddress userAddress = createAndSaveUserAddress(user, makerInfo.address());
@@ -79,6 +84,29 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     private User addUserAddressToUser(User user, UserAddress userAddress) {
         user.getAddresses().add(userAddress);
+        return userRepository.save(user);
+    }
+
+    @SearchUsers
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public User updateUserInformation(@NotNull @UserId Integer userId, @NotNull @Valid UserUpdatedInformation userUpdatedInformation) {
+        List<User> users = entitySearchWithIdAspect.entitiesOf(User.class);
+        var updatedUser = userUpdatedInformation.updatedUser(users.get(0));
+        return userRepository.save(updatedUser);
+    }
+
+    @SearchUsers
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public User addUserAddress(@NotNull @UserId Integer userId, @NotNull @Valid AddressInformationDTO addressInformationDTO) {
+        List<User> users = entitySearchWithIdAspect.entitiesOf(User.class);
+        var user = users.get(0);
+
+        var address = addressInformationDTO.generateUserAddress(user);
+        address = userAddressRepository.save(address);
+
+        user.getAddresses().add(address);
         return userRepository.save(user);
     }
 }

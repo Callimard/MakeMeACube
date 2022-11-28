@@ -48,9 +48,10 @@ public class UserManagementConfiguration {
                 .logout().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .antMatchers(HttpMethod.POST, ApiV1.AUTHENTICATION_URL + "/**").authenticated()
                 .antMatchers(HttpMethod.POST, ApiV1.USERS_URL + "/basic-registration").anonymous()
                 .antMatchers(HttpMethod.POST, ApiV1.USERS_URL + "/maker-registration").anonymous()
-                .antMatchers(HttpMethod.POST, ApiV1.AUTHENTICATION_URL + "/**").authenticated()
+                .antMatchers(HttpMethod.PUT, ApiV1.USERS_URL + "/**").authenticated()
                 .anyRequest().denyAll();
 
         http.headers().xssProtection().and().contentSecurityPolicy("script-src 'self'");
