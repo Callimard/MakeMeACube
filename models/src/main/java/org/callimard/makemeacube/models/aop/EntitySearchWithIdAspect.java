@@ -1,4 +1,4 @@
-package org.callimard.makemeacube.entities.aop;
+package org.callimard.makemeacube.models.aop;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -8,9 +8,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.callimard.makemeacube.common.aop.AopTool;
-import org.callimard.makemeacube.entities.sql.EntityNotFoundException;
-import org.callimard.makemeacube.entities.sql.User;
-import org.callimard.makemeacube.entities.sql.UserRepository;
+import org.callimard.makemeacube.models.sql.EntityNotFoundException;
+import org.callimard.makemeacube.models.sql.User;
+import org.callimard.makemeacube.models.sql.UserRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +42,7 @@ public class EntitySearchWithIdAspect {
 
     // Advices.
 
-    @Around("@annotation(org.callimard.makemeacube.entities.aop.SearchUsers)")
+    @Around("@annotation(org.callimard.makemeacube.models.aop.SearchUsers)")
     public Object searchUsers(ProceedingJoinPoint joinPoint) throws Throwable {
         return entitySearchingAdvice(joinPoint, UserId.class, User.class);
     }

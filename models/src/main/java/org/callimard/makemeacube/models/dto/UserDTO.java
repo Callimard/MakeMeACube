@@ -1,7 +1,7 @@
-package org.callimard.makemeacube.entities.dto;
+package org.callimard.makemeacube.models.dto;
 
 import org.callimard.makemeacube.common.RegistrationProvider;
-import org.callimard.makemeacube.entities.sql.User;
+import org.callimard.makemeacube.models.sql.User;
 
 import java.util.List;
 

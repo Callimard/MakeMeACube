@@ -30,7 +30,7 @@
 
         <dependency>
             <groupId>org.callimard.makemeacube</groupId>
-            <artifactId>entities</artifactId>
+            <artifactId>models</artifactId>
         </dependency>
 
         <dependency>

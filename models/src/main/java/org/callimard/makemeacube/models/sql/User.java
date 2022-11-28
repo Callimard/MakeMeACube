@@ -1,11 +1,11 @@
-package org.callimard.makemeacube.entities.sql;
+package org.callimard.makemeacube.models.sql;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import lombok.*;
 import org.callimard.makemeacube.common.RegistrationProvider;
-import org.callimard.makemeacube.entities.dto.DTOSerializable;
-import org.callimard.makemeacube.entities.dto.UserDTO;
+import org.callimard.makemeacube.models.dto.DTOSerializable;
+import org.callimard.makemeacube.models.dto.UserDTO;
 
 import javax.persistence.*;
 import java.time.Instant;

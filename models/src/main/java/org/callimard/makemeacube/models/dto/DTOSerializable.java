@@ -1,4 +1,4 @@
-package org.callimard.makemeacube.entities.dto;
+package org.callimard.makemeacube.models.dto;
 
 public interface DTOSerializable<T> {
 

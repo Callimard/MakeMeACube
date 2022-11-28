@@ -1,4 +1,4 @@
-package org.callimard.makemeacube.entities.aop;
+package org.callimard.makemeacube.models.aop;
 
 import java.lang.annotation.*;
 

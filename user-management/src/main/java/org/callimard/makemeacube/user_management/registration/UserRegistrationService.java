@@ -4,9 +4,9 @@ import org.callimard.makemeacube.common.RegistrationProvider;
 import org.callimard.makemeacube.common.validation.ValidEmail;
 import org.callimard.makemeacube.common.validation.ValidPassword;
 import org.callimard.makemeacube.common.validation.ValidPhone;
-import org.callimard.makemeacube.entities.aop.UserId;
-import org.callimard.makemeacube.entities.sql.User;
-import org.callimard.makemeacube.entities.sql.UserAddress;
+import org.callimard.makemeacube.models.aop.UserId;
+import org.callimard.makemeacube.models.sql.User;
+import org.callimard.makemeacube.models.sql.UserAddress;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;

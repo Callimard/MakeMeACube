@@ -3,7 +3,7 @@ package org.callimard.makemeacube.user_management.registration;
 import lombok.RequiredArgsConstructor;
 import org.callimard.makemeacube.common.RegistrationProvider;
 import org.callimard.makemeacube.common.api.ApiV1;
-import org.callimard.makemeacube.entities.dto.UserDTO;
+import org.callimard.makemeacube.models.dto.UserDTO;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor

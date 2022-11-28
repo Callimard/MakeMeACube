@@ -3,7 +3,7 @@ package org.callimard.makemeacube.user_management;
 import lombok.RequiredArgsConstructor;
 import org.callimard.makemeacube.common.api.ApiV1;
 import org.callimard.makemeacube.common.CommonConfiguration;
-import org.callimard.makemeacube.entities.EntitiesConfiguration;
+import org.callimard.makemeacube.models.EntitiesConfiguration;
 import org.callimard.makemeacube.jwt.JwtAuthenticationProvider;
 import org.callimard.makemeacube.jwt.JwtCompanyAuthenticationDSL;
 import org.callimard.makemeacube.jwt.JwtConfiguration;
