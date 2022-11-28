@@ -1,13 +1,10 @@
 package org.callimard.makemeacube.user_management.registration;
 
 import lombok.RequiredArgsConstructor;
-import org.callimard.makemeacube.common.api.ApiV1;
 import org.callimard.makemeacube.common.RegistrationProvider;
+import org.callimard.makemeacube.common.api.ApiV1;
 import org.callimard.makemeacube.entities.dto.UserDTO;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,5 +25,19 @@ public class UserRegistrationController {
     @PostMapping("/maker-registration")
     public UserDTO makerUserRegistration(@RequestBody UserRegistrationService.MakerUserRegistrationDTO makerUserRegistrationDTO) {
         return userRegistrationService.makerUserRegistration(makerUserRegistrationDTO, RegistrationProvider.LOCAL).toDTO();
+    }
+
+    // TODO add real authorization
+    @PutMapping("/{userId}")
+    public UserDTO updateUserInformation(@PathVariable(name = "userId") Integer userId,
+                                         @RequestBody UserRegistrationService.UserUpdatedInformation userUpdatedInformation) {
+        return userRegistrationService.updateUserInformation(userId, userUpdatedInformation).toDTO();
+    }
+
+    // TODO add real authorization
+    @PutMapping("/{userId}/addresses")
+    public UserDTO updateUserAddresses(@PathVariable(name = "userId") Integer userId,
+                                       @RequestBody UserRegistrationService.AddressInformationDTO addressInformationDTO) {
+        return userRegistrationService.addUserAddress(userId, addressInformationDTO).toDTO();
     }
 }

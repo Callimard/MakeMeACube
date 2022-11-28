@@ -4,6 +4,7 @@ import org.callimard.makemeacube.common.RegistrationProvider;
 import org.callimard.makemeacube.common.validation.ValidEmail;
 import org.callimard.makemeacube.common.validation.ValidPassword;
 import org.callimard.makemeacube.common.validation.ValidPhone;
+import org.callimard.makemeacube.entities.aop.UserId;
 import org.callimard.makemeacube.entities.sql.User;
 import org.callimard.makemeacube.entities.sql.UserAddress;
 
@@ -14,8 +15,7 @@ import javax.validation.constraints.Size;
 
 public interface UserRegistrationService {
 
-    record BasicUserRegistrationDTO(@ValidEmail @Size(max = 255) String mail,
-                                    @NotNull @NotBlank @Size(min = 5, max = 255) String pseudo,
+    record BasicUserRegistrationDTO(@ValidEmail @Size(max = 255) String mail, @NotNull @NotBlank @Size(min = 5, max = 255) String pseudo,
                                     @ValidPassword @Size(max = 30) String password) {
     }
 
@@ -27,7 +27,7 @@ public interface UserRegistrationService {
      *
      * @return the user registered
      */
-    User basicUserRegistration(@Valid BasicUserRegistrationDTO basicUserRegistrationDTO, @NotNull RegistrationProvider provider);
+    User basicUserRegistration(@NotNull @Valid BasicUserRegistrationDTO basicUserRegistrationDTO, @NotNull RegistrationProvider provider);
 
     record AddressInformationDTO(@NotNull @NotBlank String address,
                                  @NotNull @NotBlank String city,
@@ -42,12 +42,34 @@ public interface UserRegistrationService {
     record MakerUserRegistrationDTO(@ValidEmail @Size(max = 255) String mail,
                                     @NotNull @NotBlank @Size(min = 5, max = 255) String pseudo,
                                     @ValidPassword @Size(max = 30) String password,
-                                    @NotNull @NotBlank String firstName,
-                                    @NotNull @NotBlank String lastName,
+                                    @NotNull @NotBlank @Size(min = 1, max = 255) String firstName,
+                                    @NotNull @NotBlank @Size(min = 1, max = 255) String lastName,
                                     @NotNull @Valid AddressInformationDTO address,
                                     @NotNull @ValidPhone String phone,
                                     @NotNull @NotBlank String makerDescription) {
     }
 
-    User makerUserRegistration(@Valid MakerUserRegistrationDTO makerUserRegistrationDTO, @NotNull RegistrationProvider provider);
+    User makerUserRegistration(@NotNull @Valid MakerUserRegistrationDTO makerUserRegistrationDTO, @NotNull RegistrationProvider provider);
+
+    record UserUpdatedInformation(@NotNull @NotBlank @Size(min = 5, max = 255) String pseudo,
+                                  @Size(max = 255) String firstName,
+                                  @Size(max = 255) String lastName,
+                                  @NotNull @ValidPhone String phone,
+                                  String makerDescription) {
+
+        public User updatedUser(User user) {
+            var updatedUser = new User(user);
+            updatedUser.setPseudo(pseudo);
+            updatedUser.setFirstName(firstName);
+            updatedUser.setLastName(lastName);
+            updatedUser.setPhone(phone);
+            updatedUser.setMakerDescription(makerDescription);
+            return updatedUser;
+        }
+
+    }
+
+    User updateUserInformation(@NotNull @UserId Integer userId, @NotNull @Valid UserUpdatedInformation userUpdatedInformation);
+
+    User addUserAddress(@NotNull @UserId Integer userId, @NotNull @Valid AddressInformationDTO addressInformationDTO);
 }

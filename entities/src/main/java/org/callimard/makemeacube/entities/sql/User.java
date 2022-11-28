@@ -85,6 +85,22 @@ public class User implements DTOSerializable<UserDTO> {
         this(-1, mail, pseudo, password, null, null, Lists.newArrayList(), null, false, null, Lists.newArrayList(), provider, creationDate);
     }
 
+    public User(User user) {
+        this.id = user.id;
+        this.mail = user.mail;
+        this.pseudo = user.pseudo;
+        this.password = user.password;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
+        this.addresses = Lists.newArrayList(user.getAddresses());
+        this.phone = user.phone;
+        this.isMaker = user.isMaker;
+        this.makerDescription = user.makerDescription;
+        this.tools = Lists.newArrayList(user.tools);
+        this.provider = user.provider;
+        this.creationDate = user.creationDate;
+    }
+
     // Methods.
 
     @Override
