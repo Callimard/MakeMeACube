@@ -42,6 +42,6 @@ public class JwtFactory {
     }
 
     private JwtAccount generateJwtAccount(User user) {
-        return new JwtAccount(user.getMail(), user.getPseudo(), user.getFirstName(), user.getLastName(), Lists.newArrayList());
+        return new JwtAccount(user.getId(), user.getMail(), user.getPseudo(), user.getFirstName(), user.getLastName(), Lists.newArrayList());
     }
 }

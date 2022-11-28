@@ -9,6 +9,7 @@
         <module>discovery-service</module>
         <module>proxy-service</module>
         <module>common</module>
+        <module>security</module>
     </modules>
 
     <parent>
@@ -55,6 +56,12 @@
             <dependency>
                 <groupId>org.callimard.makemeacube</groupId>
                 <artifactId>common</artifactId>
+                <version>dev-SNAPSHOT</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.callimard.makemeacube</groupId>
+                <artifactId>security</artifactId>
                 <version>dev-SNAPSHOT</version>
             </dependency>
 
