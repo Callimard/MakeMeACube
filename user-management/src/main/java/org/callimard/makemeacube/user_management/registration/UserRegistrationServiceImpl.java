@@ -2,7 +2,7 @@ package org.callimard.makemeacube.user_management.registration;
 
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
-import org.callimard.makemeacube.common.RegistrationProvider;
+import org.callimard.makemeacube.models.sql.RegistrationProvider;
 import org.callimard.makemeacube.models.aop.EntitySearchWithIdAspect;
 import org.callimard.makemeacube.models.aop.SearchUsers;
 import org.callimard.makemeacube.models.aop.UserId;

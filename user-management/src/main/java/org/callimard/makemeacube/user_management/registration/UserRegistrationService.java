@@ -1,6 +1,6 @@
 package org.callimard.makemeacube.user_management.registration;
 
-import org.callimard.makemeacube.common.RegistrationProvider;
+import org.callimard.makemeacube.models.sql.RegistrationProvider;
 import org.callimard.makemeacube.common.validation.ValidEmail;
 import org.callimard.makemeacube.common.validation.ValidPassword;
 import org.callimard.makemeacube.common.validation.ValidPhone;

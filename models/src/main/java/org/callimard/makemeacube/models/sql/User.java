@@ -3,7 +3,6 @@ package org.callimard.makemeacube.models.sql;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import lombok.*;
-import org.callimard.makemeacube.common.RegistrationProvider;
 import org.callimard.makemeacube.models.dto.DTOSerializable;
 import org.callimard.makemeacube.models.dto.UserDTO;
 

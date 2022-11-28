@@ -1,14 +1,14 @@
 package org.callimard.makemeacube.user_management;
 
 import lombok.RequiredArgsConstructor;
-import org.callimard.makemeacube.common.api.ApiV1;
 import org.callimard.makemeacube.common.CommonConfiguration;
-import org.callimard.makemeacube.models.EntitiesConfiguration;
+import org.callimard.makemeacube.common.api.ApiV1;
 import org.callimard.makemeacube.jwt.JwtAuthenticationProvider;
 import org.callimard.makemeacube.jwt.JwtCompanyAuthenticationDSL;
 import org.callimard.makemeacube.jwt.JwtConfiguration;
+import org.callimard.makemeacube.models.ModelsConfiguration;
+import org.callimard.makemeacube.security.SecurityConfiguration;
 import org.callimard.makemeacube.user_management.authentication.BasicAuthenticationProvider;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,12 +22,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 @Configuration
 @EnableConfigurationProperties
-@ConfigurationProperties(prefix = "security")
 @EnableGlobalMethodSecurity(
         prePostEnabled = true,
         securedEnabled = true,
         jsr250Enabled = true)
-@Import({JwtConfiguration.class, EntitiesConfiguration.class, CommonConfiguration.class})
+@Import({JwtConfiguration.class, ModelsConfiguration.class, CommonConfiguration.class, SecurityConfiguration.class})
 public class UserManagementConfiguration {
 
     // Variables.

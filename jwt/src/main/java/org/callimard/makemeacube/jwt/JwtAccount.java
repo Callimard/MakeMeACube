@@ -19,6 +19,7 @@ public class JwtAccount {
 
     public static final String CLAIM_ACCOUNT = "account";
 
+    public static final String CLAIM_USER_ID = "id";
     public static final String CLAIM_MAIL = "mail";
     public static final String CLAIM_PSEUDO = "pseudo";
     public static final String CLAIM_FIRST_NAME = "firstName";
@@ -26,6 +27,7 @@ public class JwtAccount {
 
     // Variables.
 
+    private Integer id;
     private String mail;
     private String pseudo;
     private String firstName;
@@ -42,13 +44,13 @@ public class JwtAccount {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof JwtAccount that)) return false;
-        return Objects.equal(mail, that.mail) && Objects.equal(pseudo, that.pseudo) &&
+        return Objects.equal(id, that.id) && Objects.equal(mail, that.mail) && Objects.equal(pseudo, that.pseudo) &&
                 Objects.equal(firstName, that.firstName) && Objects.equal(lastName, that.lastName) &&
                 Objects.equal(privileges, that.privileges);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(mail, pseudo, firstName, lastName, privileges);
+        return Objects.hashCode(id, mail, pseudo, firstName, lastName, privileges);
     }
 }
