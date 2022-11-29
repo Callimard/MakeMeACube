@@ -1,4 +1,4 @@
-package org.callimard.makemeacube.user_management.registration;
+package org.callimard.makemeacube.user_management.management;
 
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import java.time.Instant;
 @RequiredArgsConstructor
 @Validated
 @Service
-public class UserRegistrationServiceImpl implements UserRegistrationService {
+public class UserManagementServiceImpl implements UserManagementService {
 
     // Variables.
 

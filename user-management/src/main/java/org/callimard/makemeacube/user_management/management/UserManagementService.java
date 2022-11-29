@@ -1,4 +1,4 @@
-package org.callimard.makemeacube.user_management.registration;
+package org.callimard.makemeacube.user_management.management;
 
 import org.callimard.makemeacube.common.validation.ValidEmail;
 import org.callimard.makemeacube.common.validation.ValidPassword;
@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public interface UserRegistrationService {
+public interface UserManagementService {
 
     record BasicUserRegistrationDTO(@ValidEmail @Size(max = 255) String mail, @NotNull @NotBlank @Size(min = 5, max = 255) String pseudo,
                                     @ValidPassword @Size(max = 30) String password) {

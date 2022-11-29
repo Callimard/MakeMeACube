@@ -1,4 +1,4 @@
-package org.callimard.makemeacube.user_management.registration;
+package org.callimard.makemeacube.user_management.management;
 
 import lombok.RequiredArgsConstructor;
 import org.callimard.makemeacube.common.api.ApiV1;
@@ -11,45 +11,45 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(ApiV1.USERS_URL)
-public class UserRegistrationController {
+public class UserManagementController {
 
     // Variables.
 
-    private final UserRegistrationService userRegistrationService;
+    private final UserManagementService userManagementService;
 
     // Methods.
 
     @PostMapping("/basic-registration")
-    public UserDTO basicUserRegistration(@RequestBody UserRegistrationService.BasicUserRegistrationDTO basicUserRegistrationDTO) {
-        return userRegistrationService.basicUserRegistration(basicUserRegistrationDTO, RegistrationProvider.LOCAL).toDTO();
+    public UserDTO basicUserRegistration(@RequestBody UserManagementService.BasicUserRegistrationDTO basicUserRegistrationDTO) {
+        return userManagementService.basicUserRegistration(basicUserRegistrationDTO, RegistrationProvider.LOCAL).toDTO();
     }
 
     @PostMapping("/maker-registration")
-    public UserDTO makerUserRegistration(@RequestBody UserRegistrationService.MakerUserRegistrationDTO makerUserRegistrationDTO) {
-        return userRegistrationService.makerUserRegistration(makerUserRegistrationDTO, RegistrationProvider.LOCAL).toDTO();
+    public UserDTO makerUserRegistration(@RequestBody UserManagementService.MakerUserRegistrationDTO makerUserRegistrationDTO) {
+        return userManagementService.makerUserRegistration(makerUserRegistrationDTO, RegistrationProvider.LOCAL).toDTO();
     }
 
     @RequiresJwtAuthentication
     @PersonalAuthorisation
     @GetMapping("/{userId}")
     public UserDTO getUserInformation(@PathVariable(name = "userId") Integer userId) {
-        return userRegistrationService.getUser(userId).toDTO();
+        return userManagementService.getUser(userId).toDTO();
     }
 
     @RequiresJwtAuthentication
     @PersonalAuthorisation
     @PutMapping("/{userId}")
     public UserDTO updateUserInformation(@PathVariable(name = "userId") Integer userId,
-                                         @RequestBody UserRegistrationService.UserUpdatedInformation userUpdatedInformation) {
-        return userRegistrationService.updateUserInformation(userId, userUpdatedInformation).toDTO();
+                                         @RequestBody UserManagementService.UserUpdatedInformation userUpdatedInformation) {
+        return userManagementService.updateUserInformation(userId, userUpdatedInformation).toDTO();
     }
 
     @RequiresJwtAuthentication
     @PersonalAuthorisation
     @PutMapping("/{userId}/addresses")
     public UserDTO addUserAddresses(@PathVariable(name = "userId") Integer userId,
-                                    @RequestBody UserRegistrationService.AddressInformationDTO addressInformationDTO) {
-        return userRegistrationService.addUserAddress(userId, addressInformationDTO).toDTO();
+                                    @RequestBody UserManagementService.AddressInformationDTO addressInformationDTO) {
+        return userManagementService.addUserAddress(userId, addressInformationDTO).toDTO();
     }
 
     @RequiresJwtAuthentication
@@ -57,6 +57,6 @@ public class UserRegistrationController {
     @DeleteMapping("/{userId}/addresses/{userAddressId}")
     public UserDTO deleteUserAddresses(@PathVariable(name = "userId") Integer userId,
                                        @PathVariable(name = "userAddressId") Integer userAddressId) {
-        return userRegistrationService.deleteUserAddress(userId, userAddressId).toDTO();
+        return userManagementService.deleteUserAddress(userId, userAddressId).toDTO();
     }
 }
