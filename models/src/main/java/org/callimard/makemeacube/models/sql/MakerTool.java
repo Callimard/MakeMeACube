@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,7 +23,6 @@ public abstract class MakerTool {
     public static final String MAKER_TOOL_OWNER = "owner";
     public static final String MAKER_TOOL_NAME = "name";
     public static final String MAKER_TOOL_DESCRIPTION = "description";
-    public static final String MAKER_TOOL_MATERIALS = "materials";
     public static final String MAKER_TOOL_REFERENCE = "reference";
 
     // Variables.
@@ -42,11 +42,13 @@ public abstract class MakerTool {
     @Column(name = MAKER_TOOL_DESCRIPTION, nullable = false)
     private String description;
 
-    @Column(name = MAKER_TOOL_MATERIALS, nullable = false)
-    private String materials;
-
     @Column(name = MAKER_TOOL_REFERENCE)
     private String reference;
+
+    @ToString.Exclude
+    @OneToMany(targetEntity = Material.class, mappedBy = Material.MATERIAL_MAKER_TOOL)
+    private List<Material> materials;
+
 
     // Methods.
 
@@ -54,7 +56,7 @@ public abstract class MakerTool {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof MakerTool makerTool)) return false;
-        return Objects.equal(owner, makerTool.owner) && Objects.equal(name, makerTool.name) &&
+        return Objects.equal(name, makerTool.name) &&
                 Objects.equal(description, makerTool.description) &&
                 Objects.equal(materials, makerTool.materials) &&
                 Objects.equal(reference, makerTool.reference);
@@ -62,6 +64,6 @@ public abstract class MakerTool {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(owner, name, description, materials, reference);
+        return Objects.hashCode(name, description, materials, reference);
     }
 }
