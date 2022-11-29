@@ -1,10 +1,10 @@
 package org.callimard.makemeacube.user_management.registration;
 
-import org.callimard.makemeacube.models.sql.RegistrationProvider;
 import org.callimard.makemeacube.common.validation.ValidEmail;
 import org.callimard.makemeacube.common.validation.ValidPassword;
 import org.callimard.makemeacube.common.validation.ValidPhone;
 import org.callimard.makemeacube.models.aop.UserId;
+import org.callimard.makemeacube.models.sql.RegistrationProvider;
 import org.callimard.makemeacube.models.sql.User;
 import org.callimard.makemeacube.models.sql.UserAddress;
 
@@ -55,7 +55,8 @@ public interface UserRegistrationService {
                                   @Size(max = 255) String firstName,
                                   @Size(max = 255) String lastName,
                                   @NotNull @ValidPhone String phone,
-                                  String makerDescription) {
+                                  String makerDescription,
+                                  @NotNull Boolean isMaker) {
 
         public User updatedUser(User user) {
             var updatedUser = new User(user);
@@ -64,6 +65,7 @@ public interface UserRegistrationService {
             updatedUser.setLastName(lastName);
             updatedUser.setPhone(phone);
             updatedUser.setMakerDescription(makerDescription);
+            updatedUser.setIsMaker(isMaker);
             return updatedUser;
         }
 
