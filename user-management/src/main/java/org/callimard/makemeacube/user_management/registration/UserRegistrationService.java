@@ -3,6 +3,7 @@ package org.callimard.makemeacube.user_management.registration;
 import org.callimard.makemeacube.common.validation.ValidEmail;
 import org.callimard.makemeacube.common.validation.ValidPassword;
 import org.callimard.makemeacube.common.validation.ValidPhone;
+import org.callimard.makemeacube.models.aop.UserAddressId;
 import org.callimard.makemeacube.models.aop.UserId;
 import org.callimard.makemeacube.models.sql.RegistrationProvider;
 import org.callimard.makemeacube.models.sql.User;
@@ -74,4 +75,6 @@ public interface UserRegistrationService {
     User updateUserInformation(@NotNull @UserId Integer userId, @NotNull @Valid UserUpdatedInformation userUpdatedInformation);
 
     User addUserAddress(@NotNull @UserId Integer userId, @NotNull @Valid AddressInformationDTO addressInformationDTO);
+
+    User deleteUserAddress(@NotNull @UserId Integer userId, @NotNull @UserAddressId Integer userAddressId);
 }
