@@ -61,12 +61,11 @@ public class UserAddress implements DTOSerializable<UserAddressDTO> {
         if (this == o) return true;
         if (!(o instanceof UserAddress that)) return false;
         return Objects.equal(address, that.address) && Objects.equal(city, that.city) &&
-                Objects.equal(country, that.country) && Objects.equal(postalCode, that.postalCode) &&
-                Objects.equal(user, that.user);
+                Objects.equal(country, that.country) && Objects.equal(postalCode, that.postalCode);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(address, city, country, postalCode, user);
+        return Objects.hashCode(address, city, country, postalCode);
     }
 }
