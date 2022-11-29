@@ -3,12 +3,14 @@ package org.callimard.makemeacube.models.sql;
 import com.google.common.base.Objects;
 import com.google.common.collect.Lists;
 import lombok.*;
+import org.callimard.makemeacube.models.aop.UserAddressId;
 import org.callimard.makemeacube.models.dto.DTOSerializable;
 import org.callimard.makemeacube.models.dto.UserDTO;
 
 import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -121,5 +123,18 @@ public class User implements DTOSerializable<UserDTO> {
     @Override
     public int hashCode() {
         return Objects.hashCode(mail, pseudo, password, firstName, lastName, addresses, phone, isMaker, makerDescription, tools);
+    }
+
+    public Optional<UserAddress> getUserAddressWith(@NonNull @UserAddressId Integer userAddressId) {
+        for (UserAddress userAddress : addresses) {
+            if (userAddress.getId().equals(userAddressId)) {
+                return Optional.of(userAddress);
+            }
+        }
+        return Optional.empty();
+    }
+
+    public void removeUserAddressWith(@NonNull @UserAddressId Integer userAddressId) {
+        addresses.removeIf(userAddress -> userAddress.getId().equals(userAddressId));
     }
 }

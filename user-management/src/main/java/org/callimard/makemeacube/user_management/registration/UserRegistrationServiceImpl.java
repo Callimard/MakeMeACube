@@ -2,14 +2,11 @@ package org.callimard.makemeacube.user_management.registration;
 
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
-import org.callimard.makemeacube.models.sql.RegistrationProvider;
-import org.callimard.makemeacube.models.aop.EntitySearchWithIdAspect;
+import org.callimard.makemeacube.models.aop.EntitySearchingAspect;
 import org.callimard.makemeacube.models.aop.SearchUsers;
+import org.callimard.makemeacube.models.aop.UserAddressId;
 import org.callimard.makemeacube.models.aop.UserId;
-import org.callimard.makemeacube.models.sql.User;
-import org.callimard.makemeacube.models.sql.UserAddress;
-import org.callimard.makemeacube.models.sql.UserAddressRepository;
-import org.callimard.makemeacube.models.sql.UserRepository;
+import org.callimard.makemeacube.models.sql.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -19,7 +16,6 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
-import java.util.List;
 
 @RequiredArgsConstructor
 @Validated
@@ -33,7 +29,7 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     private final UserRepository userRepository;
     private final UserAddressRepository userAddressRepository;
 
-    private final EntitySearchWithIdAspect entitySearchWithIdAspect;
+    private final EntitySearchingAspect entitySearchingAspect;
 
     // Methods.
 
@@ -88,11 +84,17 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     }
 
     @SearchUsers
+    @Override
+    public User getUser(@NotNull @UserId Integer userId) {
+        return entitySearchingAspect.entityOf(User.class);
+    }
+
+    @SearchUsers
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public User updateUserInformation(@NotNull @UserId Integer userId, @NotNull @Valid UserUpdatedInformation userUpdatedInformation) {
-        List<User> users = entitySearchWithIdAspect.entitiesOf(User.class);
-        var updatedUser = userUpdatedInformation.updatedUser(users.get(0));
+        var user = entitySearchingAspect.entityOf(User.class);
+        var updatedUser = userUpdatedInformation.updatedUser(user);
         return userRepository.save(updatedUser);
     }
 
@@ -100,13 +102,28 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public User addUserAddress(@NotNull @UserId Integer userId, @NotNull @Valid AddressInformationDTO addressInformationDTO) {
-        List<User> users = entitySearchWithIdAspect.entitiesOf(User.class);
-        var user = users.get(0);
+        var user = entitySearchingAspect.entityOf(User.class);
 
         var address = addressInformationDTO.generateUserAddress(user);
         address = userAddressRepository.save(address);
 
         user.getAddresses().add(address);
         return userRepository.save(user);
+    }
+
+    @SearchUsers
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public User deleteUserAddress(@NotNull @UserId Integer userId, @NotNull @UserAddressId Integer userAddressId) {
+        var user = entitySearchingAspect.entityOf(User.class);
+        var userAddress = user.getUserAddressWith(userAddressId);
+
+        if (userAddress.isPresent()) {
+            user.removeUserAddressWith(userAddressId);
+            user = userRepository.save(user);
+            userAddressRepository.delete(userAddress.get());
+        }
+
+        return user;
     }
 }

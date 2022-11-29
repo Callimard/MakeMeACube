@@ -8,12 +8,11 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.callimard.makemeacube.common.aop.AopTool;
-import org.callimard.makemeacube.models.sql.EntityNotFoundException;
-import org.callimard.makemeacube.models.sql.User;
-import org.callimard.makemeacube.models.sql.UserRepository;
+import org.callimard.makemeacube.models.sql.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Component;
 
+import javax.validation.constraints.NotNull;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +21,7 @@ import java.util.Optional;
 
 @Component
 @Aspect
-public class EntitySearchWithIdAspect {
+public class EntitySearchingAspect {
 
     // Variables.
 
@@ -31,8 +30,9 @@ public class EntitySearchWithIdAspect {
 
     // Constructors.
 
-    public EntitySearchWithIdAspect(@NonNull UserRepository userRepository) {
+    public EntitySearchingAspect(@NonNull UserRepository userRepository, @NotNull UserAddressRepository userAddressRepository) {
         addEntityManagement(User.class, userRepository);
+        addEntityManagement(UserAddress.class, userAddressRepository);
     }
 
     private void addEntityManagement(Class<?> entityClass, JpaRepository<?, Integer> entityRepository) {
@@ -47,7 +47,16 @@ public class EntitySearchWithIdAspect {
         return entitySearchingAdvice(joinPoint, UserId.class, User.class);
     }
 
+    @Around("@annotation(org.callimard.makemeacube.models.aop.SearchUserAddresses)")
+    public Object searchUserAddresses(ProceedingJoinPoint joinPoint) throws Throwable {
+        return entitySearchingAdvice(joinPoint, UserAddressId.class, UserAddress.class);
+    }
+
     // Methods.
+
+    public <T> T entityOf(Class<T> entityClass) {
+        return entitiesOf(entityClass).get(0);
+    }
 
     @SuppressWarnings("unchecked")
     public <T> List<T> entitiesOf(Class<T> entityClass) {
@@ -59,7 +68,7 @@ public class EntitySearchWithIdAspect {
         var entities = searchEntities(joinPoint, annotation, entityClass);
         updateThreadLocal(entityClass, entities);
         var returnedValue = joinPoint.proceed();
-        freeThreadLocal(User.class);
+        freeThreadLocal(entityClass);
 
         return returnedValue;
     }
