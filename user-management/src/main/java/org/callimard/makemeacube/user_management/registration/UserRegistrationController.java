@@ -31,6 +31,13 @@ public class UserRegistrationController {
 
     @RequiresJwtAuthentication
     @PersonalAuthorisation
+    @GetMapping("/{userId}")
+    public UserDTO getUserInformation(@PathVariable(name = "userId") Integer userId) {
+        return userRegistrationService.getUser(userId).toDTO();
+    }
+
+    @RequiresJwtAuthentication
+    @PersonalAuthorisation
     @PutMapping("/{userId}")
     public UserDTO updateUserInformation(@PathVariable(name = "userId") Integer userId,
                                          @RequestBody UserRegistrationService.UserUpdatedInformation userUpdatedInformation) {

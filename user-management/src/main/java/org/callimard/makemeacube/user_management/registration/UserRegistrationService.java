@@ -52,6 +52,8 @@ public interface UserRegistrationService {
 
     User makerUserRegistration(@NotNull @Valid MakerUserRegistrationDTO makerUserRegistrationDTO, @NotNull RegistrationProvider provider);
 
+    User getUser(@NotNull @UserId Integer userId);
+
     record UserUpdatedInformation(@NotNull @NotBlank @Size(min = 5, max = 255) String pseudo,
                                   @Size(max = 255) String firstName,
                                   @Size(max = 255) String lastName,

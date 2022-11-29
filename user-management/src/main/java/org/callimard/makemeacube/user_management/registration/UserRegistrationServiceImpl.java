@@ -84,6 +84,12 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
     }
 
     @SearchUsers
+    @Override
+    public User getUser(@NotNull @UserId Integer userId) {
+        return entitySearchingAspect.entityOf(User.class);
+    }
+
+    @SearchUsers
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
     public User updateUserInformation(@NotNull @UserId Integer userId, @NotNull @Valid UserUpdatedInformation userUpdatedInformation) {
