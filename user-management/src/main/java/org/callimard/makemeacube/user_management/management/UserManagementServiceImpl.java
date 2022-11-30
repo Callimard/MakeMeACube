@@ -98,8 +98,8 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Override
     public User updateUserInformation(@NotNull @UserId Integer userId, @NotNull @Valid UserUpdatedInformation userUpdatedInformation) {
         var user = entitySearchingAspect.entityOf(User.class);
-        var updatedUser = userUpdatedInformation.updatedUser(user);
-        return userRepository.save(updatedUser);
+        userUpdatedInformation.updatedUser(user);
+        return userRepository.save(user);
     }
 
     @SearchUsers
