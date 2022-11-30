@@ -2,6 +2,8 @@ package org.callimard.makemeacube.models.sql;
 
 import com.google.common.base.Objects;
 import lombok.*;
+import org.callimard.makemeacube.models.dto.DTOSerializable;
+import org.callimard.makemeacube.models.dto.MaterialDTO;
 
 import javax.persistence.*;
 
@@ -12,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "Material")
-public class Material {
+public class Material implements DTOSerializable<MaterialDTO> {
 
     // Constants.
 
@@ -43,6 +45,11 @@ public class Material {
     private MakerTool tool;
 
     // Methods.
+
+    @Override
+    public MaterialDTO toDTO() {
+        return new MaterialDTO(this);
+    }
 
     @Override
     public boolean equals(Object o) {

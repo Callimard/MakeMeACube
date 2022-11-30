@@ -1,18 +1,20 @@
 package org.callimard.makemeacube.models.sql;
 
 import com.google.common.base.Objects;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.callimard.makemeacube.models.dto.Printer3DDTO;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "Printer3D")
 @DiscriminatorValue("P3D")
@@ -27,7 +29,7 @@ public class Printer3D extends MakerTool {
     public static final String PRINTER_3D_Y_ACCURACY = "yAccuracy";
     public static final String PRINTER_3D_Z_ACCURACY = "zAccuracy";
     public static final String PRINTER_3D_LAYER_THICKNESS = "layerThickness";
-    public static final String PRINTER_3D_TYPE = "layerThickness";
+    public static final String PRINTER_3D_TYPE = "type";
 
     // Variables.
 
@@ -41,21 +43,45 @@ public class Printer3D extends MakerTool {
     private Integer z;
 
     @Column(name = PRINTER_3D_X_ACCURACY, nullable = false)
-    private Double xAccuracy;
+    private Integer xAccuracy;
 
     @Column(name = PRINTER_3D_Y_ACCURACY, nullable = false)
-    private Double yAccuracy;
+    private Integer yAccuracy;
 
     @Column(name = PRINTER_3D_Z_ACCURACY, nullable = false)
-    private Double zAccuracy;
+    private Integer zAccuracy;
 
     @Column(name = PRINTER_3D_LAYER_THICKNESS, nullable = false)
-    private Double layerThickness;
+    private Integer layerThickness;
 
     @Column(name = PRINTER_3D_TYPE, nullable = false)
     private Printer3DType type;
 
+    // Constructors.
+
+    public Printer3D() {
+        super();
+    }
+
+    public Printer3D(Integer id, User owner, String name, String description, String reference, List<Material> materials, Integer x, Integer y,
+                     Integer z, Integer xAccuracy, Integer yAccuracy, Integer zAccuracy, Integer layerThickness, Printer3DType type) {
+        super(id, owner, name, description, reference, materials);
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.xAccuracy = xAccuracy;
+        this.yAccuracy = yAccuracy;
+        this.zAccuracy = zAccuracy;
+        this.layerThickness = layerThickness;
+        this.type = type;
+    }
+
     // Methods.
+
+    @Override
+    public Printer3DDTO toDTO() {
+        return new Printer3DDTO(this);
+    }
 
     @Override
     public boolean equals(Object o) {
