@@ -68,15 +68,13 @@ public interface UserManagementService {
                                   String makerDescription,
                                   @NotNull Boolean isMaker) {
 
-        public User updatedUser(User user) {
-            var updatedUser = new User(user);
-            updatedUser.setPseudo(pseudo);
-            updatedUser.setFirstName(firstName);
-            updatedUser.setLastName(lastName);
-            updatedUser.setPhone(phone);
-            updatedUser.setMakerDescription(makerDescription);
-            updatedUser.setIsMaker(isMaker);
-            return updatedUser;
+        public void updatedUser(User user) {
+            user.setPseudo(pseudo);
+            user.setFirstName(firstName);
+            user.setLastName(lastName);
+            user.setPhone(phone);
+            user.setMakerDescription(makerDescription);
+            user.setIsMaker(isMaker);
         }
 
     }
