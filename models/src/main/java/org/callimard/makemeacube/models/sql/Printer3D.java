@@ -28,7 +28,7 @@ public class Printer3D extends MakerTool {
     public static final String PRINTER_3D_X_ACCURACY = "xAccuracy";
     public static final String PRINTER_3D_Y_ACCURACY = "yAccuracy";
     public static final String PRINTER_3D_Z_ACCURACY = "zAccuracy";
-    public static final String PRINTER_3D_LAYER_THICKNESS = "layerThickness";
+    public static final String PRINTER_3D_LAYER_RESOLUTION = "resolution";
     public static final String PRINTER_3D_TYPE = "type";
 
     // Variables.
@@ -51,8 +51,8 @@ public class Printer3D extends MakerTool {
     @Column(name = PRINTER_3D_Z_ACCURACY, nullable = false)
     private Integer zAccuracy;
 
-    @Column(name = PRINTER_3D_LAYER_THICKNESS, nullable = false)
-    private Integer layerThickness;
+    @Column(name = PRINTER_3D_LAYER_RESOLUTION)
+    private String resolution;
 
     @Column(name = PRINTER_3D_TYPE, nullable = false)
     private Printer3DType type;
@@ -63,16 +63,16 @@ public class Printer3D extends MakerTool {
         super();
     }
 
-    public Printer3D(Integer id, User owner, String name, String description, String reference, List<Material> materials, Integer x, Integer y,
-                     Integer z, Integer xAccuracy, Integer yAccuracy, Integer zAccuracy, Integer layerThickness, Printer3DType type) {
-        super(id, owner, name, description, reference, materials);
+    public Printer3D(Integer id, User owner, String name, String description, String reference, List<Material> materials, Integer quantity, Integer x,
+                     Integer y, Integer z, Integer xAccuracy, Integer yAccuracy, Integer zAccuracy, String resolution, Printer3DType type) {
+        super(id, owner, name, description, reference, materials, quantity);
         this.x = x;
         this.y = y;
         this.z = z;
         this.xAccuracy = xAccuracy;
         this.yAccuracy = yAccuracy;
         this.zAccuracy = zAccuracy;
-        this.layerThickness = layerThickness;
+        this.resolution = resolution;
         this.type = type;
     }
 
@@ -88,16 +88,14 @@ public class Printer3D extends MakerTool {
         if (this == o) return true;
         if (!(o instanceof Printer3D printer3D)) return false;
         if (!super.equals(o)) return false;
-        return Objects.equal(x, printer3D.x) && Objects.equal(y, printer3D.y) &&
-                Objects.equal(z, printer3D.z) && Objects.equal(xAccuracy, printer3D.xAccuracy) &&
-                Objects.equal(yAccuracy, printer3D.yAccuracy) &&
-                Objects.equal(zAccuracy, printer3D.zAccuracy) &&
-                Objects.equal(layerThickness, printer3D.layerThickness) &&
+        return Objects.equal(x, printer3D.x) && Objects.equal(y, printer3D.y) && Objects.equal(z, printer3D.z) &&
+                Objects.equal(xAccuracy, printer3D.xAccuracy) && Objects.equal(yAccuracy, printer3D.yAccuracy) &&
+                Objects.equal(zAccuracy, printer3D.zAccuracy) && Objects.equal(resolution, printer3D.resolution) &&
                 Objects.equal(type, printer3D.type);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(super.hashCode(), x, y, z, xAccuracy, yAccuracy, zAccuracy, layerThickness, type);
+        return Objects.hashCode(super.hashCode(), x, y, z, xAccuracy, yAccuracy, zAccuracy, resolution, type);
     }
 }

@@ -103,13 +103,14 @@ public interface UserManagementService {
                                  @NotNull @Size(max = 2000) String description,
                                  @Size(max = 3000) String reference,
                                  @NotNull @Size(min = 1) List<@Valid MaterialInformationDTO> materials,
+                                 @NotNull @Min(1) Integer quantity,
                                  @NotNull @Min(0) Integer x,
                                  @NotNull @Min(0) Integer y,
                                  @NotNull @Min(0) Integer z,
                                  @NotNull @Min(0) Integer xAccuracy,
                                  @NotNull @Min(0) Integer yAccuracy,
                                  @NotNull @Min(0) Integer zAccuracy,
-                                 @NotNull @Min(0) Integer layerThickness,
+                                 @Size(max = 45) String resolution,
                                  @NotNull Printer3DType type) {
 
         public Printer3D generatePrinter3D(User user) {
@@ -119,13 +120,14 @@ public interface UserManagementService {
                                  description,
                                  reference,
                                  Lists.newArrayList(),
+                                 quantity,
                                  x,
                                  y,
                                  z,
                                  xAccuracy,
                                  yAccuracy,
                                  zAccuracy,
-                                 layerThickness,
+                                 resolution,
                                  type);
         }
 
@@ -142,13 +144,14 @@ public interface UserManagementService {
             printer3D.setDescription(description);
             printer3D.setReference(reference);
             printer3D.setMaterials(materials.stream().map(materialInformationDTO -> materialInformationDTO.generateMaterial(printer3D)).toList());
+            printer3D.setQuantity(quantity);
             printer3D.setX(x);
             printer3D.setY(y);
             printer3D.setZ(z);
             printer3D.setXAccuracy(xAccuracy);
             printer3D.setYAccuracy(yAccuracy);
             printer3D.setZAccuracy(zAccuracy);
-            printer3D.setLayerThickness(layerThickness);
+            printer3D.setResolution(resolution);
             printer3D.setType(type);
         }
     }

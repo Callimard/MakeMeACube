@@ -18,6 +18,8 @@ public abstract class MakerToolDTO {
     private final String reference;
     private final List<MaterialDTO> materials;
 
+    private final Integer quantity;
+
     // Methods.
 
     @Override
@@ -26,11 +28,11 @@ public abstract class MakerToolDTO {
         if (!(o instanceof MakerToolDTO that)) return false;
         return Objects.equal(id, that.id) && Objects.equal(name, that.name) &&
                 Objects.equal(description, that.description) && Objects.equal(reference, that.reference) &&
-                Objects.equal(materials, that.materials);
+                Objects.equal(materials, that.materials) && Objects.equal(quantity, that.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, name, description, reference, materials);
+        return Objects.hashCode(id, name, description, reference, materials, quantity);
     }
 }
