@@ -54,6 +54,14 @@ public class UserManagementController {
 
     @RequiresJwtAuthentication
     @PersonalAuthorisation
+    @PutMapping("/{userId}/addresses/{userAddressId}")
+    public UserDTO updateUserAddress(@PathVariable(name = "userId") Integer userId, @PathVariable(name = "userAddressId") Integer userAddressId,
+                                     @RequestBody UserManagementService.UserAddressInformationDTO userAddressInformationDTO) {
+        return userManagementService.updateUserAddress(userId, userAddressId, userAddressInformationDTO).toDTO();
+    }
+
+    @RequiresJwtAuthentication
+    @PersonalAuthorisation
     @DeleteMapping("/{userId}/addresses/{userAddressId}")
     public UserDTO deleteUserAddresses(@PathVariable(name = "userId") Integer userId,
                                        @PathVariable(name = "userAddressId") Integer userAddressId) {
@@ -66,6 +74,15 @@ public class UserManagementController {
     public UserDTO addPrinter3D(@PathVariable(name = "userId") Integer userId,
                                 @RequestBody UserManagementService.Print3DInformationDTO print3DInformationDTO) {
         return userManagementService.addPrinter3D(userId, print3DInformationDTO).toDTO();
+    }
+
+    @RequiresJwtAuthentication
+    @PersonalAuthorisation
+    @PutMapping("/{userId}/maker-tools/printer3ds/{printer3DId}")
+    public UserDTO updatePrinter3D(@PathVariable(name = "userId") Integer userId,
+                                   @PathVariable(name = "printer3DId") Integer printer3DId,
+                                   @RequestBody UserManagementService.Print3DInformationDTO print3DInformationDTO) {
+        return userManagementService.updatePrinter3D(userId, printer3DId, print3DInformationDTO).toDTO();
     }
 
     @RequiresJwtAuthentication
