@@ -2,6 +2,8 @@ package org.callimard.makemeacube.models.sql;
 
 import com.google.common.base.Objects;
 import lombok.*;
+import org.callimard.makemeacube.models.dto.DTOSerializable;
+import org.callimard.makemeacube.models.dto.MakerToolDTO;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,13 +11,13 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "MakerTool")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "makerToolType")
-public abstract class MakerTool {
+public abstract class MakerTool implements DTOSerializable<MakerToolDTO> {
 
     // Constants.
 

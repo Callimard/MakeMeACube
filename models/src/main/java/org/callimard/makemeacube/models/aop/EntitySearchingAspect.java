@@ -30,9 +30,12 @@ public class EntitySearchingAspect {
 
     // Constructors.
 
-    public EntitySearchingAspect(@NonNull UserRepository userRepository, @NotNull UserAddressRepository userAddressRepository) {
+    public EntitySearchingAspect(@NonNull UserRepository userRepository, @NotNull UserAddressRepository userAddressRepository,
+                                 @NotNull Printer3DRepository printer3DRepository, @NotNull MaterialRepository materialRepository) {
         addEntityManagement(User.class, userRepository);
         addEntityManagement(UserAddress.class, userAddressRepository);
+        addEntityManagement(Printer3D.class, printer3DRepository);
+        addEntityManagement(Material.class, materialRepository);
     }
 
     private void addEntityManagement(Class<?> entityClass, JpaRepository<?, Integer> entityRepository) {
@@ -50,6 +53,16 @@ public class EntitySearchingAspect {
     @Around("@annotation(org.callimard.makemeacube.models.aop.SearchUserAddresses)")
     public Object searchUserAddresses(ProceedingJoinPoint joinPoint) throws Throwable {
         return entitySearchingAdvice(joinPoint, UserAddressId.class, UserAddress.class);
+    }
+
+    @Around("@annotation(org.callimard.makemeacube.models.aop.SearchPrinter3Ds)")
+    public Object searchPrinter3Ds(ProceedingJoinPoint joinPoint) throws Throwable {
+        return entitySearchingAdvice(joinPoint, Printer3DId.class, Printer3D.class);
+    }
+
+    @Around("@annotation(org.callimard.makemeacube.models.aop.SearchMaterials)")
+    public Object searchMaterials(ProceedingJoinPoint joinPoint) throws Throwable {
+        return entitySearchingAdvice(joinPoint, MaterialId.class, Material.class);
     }
 
     // Methods.

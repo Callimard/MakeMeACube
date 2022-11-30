@@ -46,10 +46,10 @@ public class UserManagementController {
 
     @RequiresJwtAuthentication
     @PersonalAuthorisation
-    @PutMapping("/{userId}/addresses")
+    @PostMapping("/{userId}/addresses")
     public UserDTO addUserAddresses(@PathVariable(name = "userId") Integer userId,
-                                    @RequestBody UserManagementService.AddressInformationDTO addressInformationDTO) {
-        return userManagementService.addUserAddress(userId, addressInformationDTO).toDTO();
+                                    @RequestBody UserManagementService.UserAddressInformationDTO userAddressInformationDTO) {
+        return userManagementService.addUserAddress(userId, userAddressInformationDTO).toDTO();
     }
 
     @RequiresJwtAuthentication
@@ -58,5 +58,21 @@ public class UserManagementController {
     public UserDTO deleteUserAddresses(@PathVariable(name = "userId") Integer userId,
                                        @PathVariable(name = "userAddressId") Integer userAddressId) {
         return userManagementService.deleteUserAddress(userId, userAddressId).toDTO();
+    }
+
+    @RequiresJwtAuthentication
+    @PersonalAuthorisation
+    @PostMapping("/{userId}/maker-tools/printer3ds")
+    public UserDTO addPrinter3D(@PathVariable(name = "userId") Integer userId,
+                                @RequestBody UserManagementService.Print3DInformationDTO print3DInformationDTO) {
+        return userManagementService.addPrinter3D(userId, print3DInformationDTO).toDTO();
+    }
+
+    @RequiresJwtAuthentication
+    @PersonalAuthorisation
+    @DeleteMapping("/{userId}/maker-tools/{makerToolId}")
+    public UserDTO deleteMakerTool(@PathVariable(name = "userId") Integer userId,
+                                   @PathVariable(name = "makerToolId") Integer makerToolId) {
+        return userManagementService.deleteMakerTool(userId, makerToolId).toDTO();
     }
 }
