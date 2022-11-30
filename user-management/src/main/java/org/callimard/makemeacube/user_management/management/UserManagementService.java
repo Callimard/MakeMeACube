@@ -40,6 +40,13 @@ public interface UserManagementService {
         public UserAddress generateUserAddress(User user) {
             return new UserAddress(-1, address, city, country, postalCode, user);
         }
+
+        public void updateUserAddress(UserAddress userAddress) {
+            userAddress.setAddress(address);
+            userAddress.setCity(city);
+            userAddress.setCountry(country);
+            userAddress.setPostalCode(postalCode);
+        }
     }
 
     record MakerUserRegistrationDTO(@ValidEmail @Size(max = 255) String mail,
@@ -80,6 +87,9 @@ public interface UserManagementService {
 
     User addUserAddress(@NotNull @UserId Integer userId, @NotNull @Valid UserAddressInformationDTO userAddressInformationDTO);
 
+    User updateUserAddress(@NotNull @UserId Integer userId, @NotNull @UserAddressId Integer userAddressId,
+                           @NotNull @Valid UserAddressInformationDTO userAddressInformationDTO);
+
     User deleteUserAddress(@NotNull @UserId Integer userId, @NotNull @UserAddressId Integer userAddressId);
 
     record MaterialInformationDTO(@NotNull MaterialType type, @Size(max = 1000) String colors, @Size(max = 1000) String description) {
@@ -118,9 +128,35 @@ public interface UserManagementService {
                                  layerThickness,
                                  type);
         }
+
+        /**
+         * Update the {@link Printer3D}.
+         * <p>
+         * Concerning the update of materials, the materials list is replace by new materials however each new {@link Material} has as id the value
+         * {@code -1}. Before save the updated Printer3D, new materials must be persisted.
+         *
+         * @param printer3D the Printer3D to update
+         */
+        public void updatePrinter3D(Printer3D printer3D) {
+            printer3D.setName(name);
+            printer3D.setDescription(description);
+            printer3D.setReference(reference);
+            printer3D.setMaterials(materials.stream().map(materialInformationDTO -> materialInformationDTO.generateMaterial(printer3D)).toList());
+            printer3D.setX(x);
+            printer3D.setY(y);
+            printer3D.setZ(z);
+            printer3D.setXAccuracy(xAccuracy);
+            printer3D.setYAccuracy(yAccuracy);
+            printer3D.setZAccuracy(zAccuracy);
+            printer3D.setLayerThickness(layerThickness);
+            printer3D.setType(type);
+        }
     }
 
     User addPrinter3D(@NotNull @UserId Integer userId, @NotNull @Valid Print3DInformationDTO print3DInformationDTO);
+
+    User updatePrinter3D(@NotNull @UserId Integer userId, @NotNull @Printer3DId Integer printer3DId,
+                         @NotNull @Valid Print3DInformationDTO print3DInformationDTO);
 
     User deleteMakerTool(@NotNull @UserId Integer userId, @NotNull @Printer3DId Integer printer3DId);
 }

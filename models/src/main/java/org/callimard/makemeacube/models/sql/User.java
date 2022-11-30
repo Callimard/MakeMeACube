@@ -148,6 +148,16 @@ public class User implements DTOSerializable<UserDTO> {
         return Optional.empty();
     }
 
+    @SuppressWarnings("unchecked")
+    public <T> Optional<T> getMakerTool(@NonNull @MakerToolId Integer makerToolId, Class<T> makerToolClass) {
+        var makerTool = getMakerToolWith(makerToolId);
+        if (makerTool.isPresent() && makerToolClass.isInstance(makerTool.get())) {
+            return Optional.of((T) makerTool.get());
+        }
+
+        return Optional.empty();
+    }
+
     public void removeMakerToolWith(@NonNull @MakerToolId Integer makerToolId) {
         tools.removeIf(makerTool -> makerTool.getId().equals(makerToolId));
     }

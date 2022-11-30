@@ -112,6 +112,22 @@ public class UserManagementServiceImpl implements UserManagementService {
     @SearchUsers
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     @Override
+    public User updateUserAddress(@NotNull @UserId Integer userId, @NotNull @UserAddressId Integer userAddressId,
+                                  @NotNull @Valid UserAddressInformationDTO userAddressInformationDTO) {
+        var user = entitySearchingAspect.entityOf(User.class);
+        var address = user.getUserAddressWith(userAddressId);
+
+        if (address.isPresent()) {
+            userAddressInformationDTO.updateUserAddress(address.get()); // User entity is also updated by reference
+            userAddressRepository.save(address.get());
+        }
+
+        return user;
+    }
+
+    @SearchUsers
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
     public User deleteUserAddress(@NotNull @UserId Integer userId, @NotNull @UserAddressId Integer userAddressId) {
         var user = entitySearchingAspect.entityOf(User.class);
         var userAddress = user.getUserAddressWith(userAddressId);
@@ -146,6 +162,25 @@ public class UserManagementServiceImpl implements UserManagementService {
             materials.add(materialRepository.save(materialInformationDTO.generateMaterial(printer3D)));
         }
         return materials;
+    }
+
+    @SearchUsers
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public User updatePrinter3D(@NotNull @UserId Integer userId, @NotNull @Printer3DId Integer printer3DId,
+                                @NotNull @Valid Print3DInformationDTO print3DInformationDTO) {
+        var user = entitySearchingAspect.entityOf(User.class);
+        var printer3D = user.getMakerTool(printer3DId, Printer3D.class);
+
+        if (printer3D.isPresent()) {
+            materialRepository.deleteAll(printer3D.get().getMaterials());
+            print3DInformationDTO.updatePrinter3D(printer3D.get()); // User entity is also updated by reference
+            var savedMaterials = materialRepository.saveAll(printer3D.get().getMaterials());
+            printer3D.get().setMaterials(savedMaterials);
+            printer3DRepository.save(printer3D.get());
+        }
+
+        return user;
     }
 
     @SearchUsers
