@@ -2,10 +2,12 @@ package org.callimard.makemeacube.user_management.management;
 
 import lombok.RequiredArgsConstructor;
 import org.callimard.makemeacube.common.api.ApiV1;
+import org.callimard.makemeacube.jwt.JwtAccount;
 import org.callimard.makemeacube.jwt.aop.RequiresJwtAuthentication;
 import org.callimard.makemeacube.models.dto.UserDTO;
 import org.callimard.makemeacube.models.sql.RegistrationProvider;
 import org.callimard.makemeacube.security.aop.PersonalAuthorisation;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -91,5 +93,31 @@ public class UserManagementController {
     public UserDTO deleteMakerTool(@PathVariable(name = "userId") Integer userId,
                                    @PathVariable(name = "makerToolId") Integer makerToolId) {
         return userManagementService.deleteMakerTool(userId, makerToolId).toDTO();
+    }
+
+    @RequiresJwtAuthentication
+    @PostMapping("/{evaluatedUserId}/grades")
+    public UserDTO addUserEvaluation(@PathVariable(name = "evaluatedUserId") Integer evaluatedUserId,
+                                     @RequestBody UserManagementService.UserEvaluationInformationDTO userEvaluationInformationDTO,
+                                     @AuthenticationPrincipal JwtAccount jwtAccount) {
+        return userManagementService.addUserEvaluation(jwtAccount.getId(), evaluatedUserId, userEvaluationInformationDTO).toDTO();
+    }
+
+    @RequiresJwtAuthentication
+    @PutMapping("/{evaluatedUserId}/grades/{userEvaluationId}")
+    public UserDTO updateUserEvaluation(@PathVariable(name = "evaluatedUserId") Integer evaluatedUserId,
+                                        @PathVariable(name = "userEvaluationId") Integer userEvaluationId,
+                                        @RequestBody UserManagementService.UserEvaluationInformationDTO userEvaluationInformationDTO,
+                                        @AuthenticationPrincipal JwtAccount jwtAccount) {
+        return userManagementService.updateUserEvaluation(jwtAccount.getId(), evaluatedUserId, userEvaluationId, userEvaluationInformationDTO)
+                .toDTO();
+    }
+
+    @RequiresJwtAuthentication
+    @DeleteMapping("/{evaluatedUserId}/grades/{userEvaluationId}")
+    public UserDTO deleteUserEvaluation(@PathVariable(name = "evaluatedUserId") Integer evaluatedUserId,
+                                        @PathVariable(name = "userEvaluationId") Integer userEvaluationId,
+                                        @AuthenticationPrincipal JwtAccount jwtAccount) {
+        return userManagementService.deleteUserEvaluation(jwtAccount.getId(), evaluatedUserId, userEvaluationId).toDTO();
     }
 }

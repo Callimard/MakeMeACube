@@ -6,14 +6,12 @@ import org.callimard.makemeacube.common.validation.ValidPassword;
 import org.callimard.makemeacube.common.validation.ValidPhone;
 import org.callimard.makemeacube.models.aop.Printer3DId;
 import org.callimard.makemeacube.models.aop.UserAddressId;
+import org.callimard.makemeacube.models.aop.UserEvaluationId;
 import org.callimard.makemeacube.models.aop.UserId;
 import org.callimard.makemeacube.models.sql.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.List;
 
 public interface UserManagementService {
@@ -162,4 +160,26 @@ public interface UserManagementService {
                          @NotNull @Valid Print3DInformationDTO print3DInformationDTO);
 
     User deleteMakerTool(@NotNull @UserId Integer userId, @NotNull @Printer3DId Integer printer3DId);
+
+    record UserEvaluationInformationDTO(@NotNull @Min(0) @Max(5) Integer grade, @Size(max = 300) String comment) {
+
+        public UserEvaluation generateUserGrade(User evaluator, User evaluated) {
+            return new UserEvaluation(-1, grade, comment, evaluator, evaluated);
+        }
+
+        public void updateUserEvaluation(UserEvaluation userEvaluation) {
+            userEvaluation.setGrade(grade);
+            userEvaluation.setComment(comment);
+        }
+    }
+
+    User addUserEvaluation(@NotNull @UserId Integer userId, @NotNull @UserId Integer evaluatedUserId,
+                           @NotNull @Valid UserEvaluationInformationDTO userEvaluationInformationDTO);
+
+    User updateUserEvaluation(@NotNull @UserId Integer userId, @NotNull @UserId Integer evaluatedUserId,
+                              @NotNull @UserEvaluationId Integer userEvaluationId,
+                              @NotNull @Valid UserEvaluationInformationDTO userEvaluationInformationDTO);
+
+    User deleteUserEvaluation(@NotNull @UserId Integer userId, @NotNull @UserId Integer evaluatedUserId,
+                              @NotNull @UserEvaluationId Integer userEvaluationId);
 }

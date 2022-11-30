@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import lombok.*;
 import org.callimard.makemeacube.models.aop.MakerToolId;
 import org.callimard.makemeacube.models.aop.UserAddressId;
+import org.callimard.makemeacube.models.aop.UserEvaluationId;
 import org.callimard.makemeacube.models.dto.DTOSerializable;
 import org.callimard.makemeacube.models.dto.UserDTO;
 
@@ -75,6 +76,14 @@ public class User implements DTOSerializable<UserDTO> {
     @OneToMany(targetEntity = MakerTool.class, mappedBy = MakerTool.MAKER_TOOL_OWNER)
     private List<MakerTool> tools = Lists.newArrayList();
 
+    @ToString.Exclude
+    @OneToMany(targetEntity = UserEvaluation.class, mappedBy = UserEvaluation.USER_EVALUATION_EVALUATOR)
+    private List<UserEvaluation> evaluations = Lists.newArrayList();
+
+    @ToString.Exclude
+    @OneToMany(targetEntity = UserEvaluation.class, mappedBy = UserEvaluation.USER_EVALUATION_EVALUATED)
+    private List<UserEvaluation> grades = Lists.newArrayList();
+
     @Column(name = USER_PROVIDER, nullable = false)
     private RegistrationProvider provider;
 
@@ -84,7 +93,8 @@ public class User implements DTOSerializable<UserDTO> {
     // Constructors.
 
     public User(@NonNull String mail, @NonNull String pseudo, @NonNull String password, RegistrationProvider provider, Instant creationDate) {
-        this(-1, mail, pseudo, password, null, null, Lists.newArrayList(), null, false, null, Lists.newArrayList(), provider, creationDate);
+        this(-1, mail, pseudo, password, null, null, Lists.newArrayList(), null, false, null, Lists.newArrayList(), Lists.newArrayList(),
+             Lists.newArrayList(), provider, creationDate);
     }
 
     public User(User user) {
@@ -99,6 +109,8 @@ public class User implements DTOSerializable<UserDTO> {
         this.isMaker = user.isMaker;
         this.makerDescription = user.makerDescription;
         this.tools = Lists.newArrayList(user.tools);
+        this.evaluations = Lists.newArrayList(user.evaluations);
+        this.grades = Lists.newArrayList(user.grades);
         this.provider = user.provider;
         this.creationDate = user.creationDate;
     }
@@ -156,6 +168,20 @@ public class User implements DTOSerializable<UserDTO> {
         }
 
         return Optional.empty();
+    }
+
+    public Optional<UserEvaluation> getUserEvaluations(@NonNull @UserEvaluationId Integer userEvaluationId) {
+        for (UserEvaluation userEvaluation : evaluations) {
+            if (userEvaluation.getId().equals(userEvaluationId)) {
+                return Optional.of(userEvaluation);
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    public void removeUserEvaluation(@NonNull @UserEvaluationId Integer userEvaluationId) {
+        evaluations.removeIf(userEvaluation -> userEvaluation.getId().equals(userEvaluationId));
     }
 
     public void removeMakerToolWith(@NonNull @MakerToolId Integer makerToolId) {

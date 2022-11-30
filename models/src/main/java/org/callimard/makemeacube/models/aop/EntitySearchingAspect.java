@@ -31,11 +31,13 @@ public class EntitySearchingAspect {
     // Constructors.
 
     public EntitySearchingAspect(@NonNull UserRepository userRepository, @NotNull UserAddressRepository userAddressRepository,
-                                 @NotNull Printer3DRepository printer3DRepository, @NotNull MaterialRepository materialRepository) {
+                                 @NotNull Printer3DRepository printer3DRepository, @NotNull MaterialRepository materialRepository,
+                                 @NotNull UserEvaluationRepository userEvaluationRepository) {
         addEntityManagement(User.class, userRepository);
         addEntityManagement(UserAddress.class, userAddressRepository);
         addEntityManagement(Printer3D.class, printer3DRepository);
         addEntityManagement(Material.class, materialRepository);
+        addEntityManagement(UserEvaluation.class, userEvaluationRepository);
     }
 
     private void addEntityManagement(Class<?> entityClass, JpaRepository<?, Integer> entityRepository) {
@@ -63,6 +65,11 @@ public class EntitySearchingAspect {
     @Around("@annotation(org.callimard.makemeacube.models.aop.SearchMaterials)")
     public Object searchMaterials(ProceedingJoinPoint joinPoint) throws Throwable {
         return entitySearchingAdvice(joinPoint, MaterialId.class, Material.class);
+    }
+
+    @Around("@annotation(org.callimard.makemeacube.models.aop.SearchUserEvaluations)")
+    public Object searchUserEvaluations(ProceedingJoinPoint joinPoint) throws Throwable {
+        return entitySearchingAdvice(joinPoint, UserEvaluationId.class, UserEvaluation.class);
     }
 
     // Methods.

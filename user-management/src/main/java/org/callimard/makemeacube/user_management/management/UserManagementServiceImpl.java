@@ -29,6 +29,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     private final MakerToolRepository makerToolRepository;
     private final Printer3DRepository printer3DRepository;
     private final MaterialRepository materialRepository;
+    private final UserEvaluationRepository userEvaluationRepository;
 
     private final EntitySearchingAspect entitySearchingAspect;
 
@@ -68,6 +69,8 @@ public class UserManagementServiceImpl implements UserManagementService {
                         makerInfo.phone(),
                         true,
                         makerInfo.makerDescription(),
+                        Lists.newArrayList(),
+                        Lists.newArrayList(),
                         Lists.newArrayList(),
                         RegistrationProvider.LOCAL,
                         Instant.now());
@@ -194,6 +197,54 @@ public class UserManagementServiceImpl implements UserManagementService {
             user.removeMakerToolWith(makerToolId);
             materialRepository.deleteAll(makerTool.get().getMaterials());
             makerToolRepository.delete(makerTool.get());
+        }
+
+        return user;
+    }
+
+    @SearchUsers
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public User addUserEvaluation(@NotNull @UserId Integer userId, @NotNull @UserId Integer evaluatedUserId,
+                                  @NotNull @Valid UserManagementService.UserEvaluationInformationDTO userEvaluationInformationDTO) {
+        var users = entitySearchingAspect.entitiesOf(User.class);
+
+        var evaluator = users.get(0);
+        var evaluated = users.get(1);
+
+        userEvaluationRepository.save(userEvaluationInformationDTO.generateUserGrade(evaluator, evaluated));
+
+        return evaluator;
+    }
+
+    @SearchUsers
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public User updateUserEvaluation(@NotNull @UserId Integer userId, @NotNull @UserId Integer evaluatedUserId,
+                                     @NotNull @UserEvaluationId Integer userEvaluationId,
+                                     @NotNull @Valid UserEvaluationInformationDTO userEvaluationInformationDTO) {
+        var user = entitySearchingAspect.entityOf(User.class);
+        var userEvaluation = user.getUserEvaluations(userEvaluationId);
+
+        if (userEvaluation.isPresent() && userEvaluation.get().getEvaluated().getId().equals(evaluatedUserId)) {
+            userEvaluationInformationDTO.updateUserEvaluation(userEvaluation.get());
+            userEvaluationRepository.save(userEvaluation.get());
+        }
+
+        return user;
+    }
+
+    @SearchUsers
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Override
+    public User deleteUserEvaluation(@NotNull @UserId Integer userId, @NotNull @UserId Integer evaluatedUserId,
+                                     @NotNull @UserEvaluationId Integer userEvaluationId) {
+        var user = entitySearchingAspect.entityOf(User.class);
+        var userEvaluation = user.getUserEvaluations(userEvaluationId);
+
+        if (userEvaluation.isPresent() && userEvaluation.get().getEvaluated().getId().equals(evaluatedUserId)) {
+            userEvaluationRepository.delete(userEvaluation.get());
+            user.removeUserEvaluation(userEvaluationId);
         }
 
         return user;

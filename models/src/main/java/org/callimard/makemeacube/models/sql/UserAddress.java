@@ -45,7 +45,7 @@ public class UserAddress implements DTOSerializable<UserAddressDTO> {
     @Column(name = USER_ADDRESS_POSTAL_CODE, nullable = false)
     private String postalCode;
 
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = USER_ADDRESS_USER)
     private User user;
 
