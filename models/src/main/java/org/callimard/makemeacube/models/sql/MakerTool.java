@@ -26,6 +26,7 @@ public abstract class MakerTool implements DTOSerializable<MakerToolDTO> {
     public static final String MAKER_TOOL_NAME = "name";
     public static final String MAKER_TOOL_DESCRIPTION = "description";
     public static final String MAKER_TOOL_REFERENCE = "reference";
+    public static final String MAKER_TOOL_QUANTITY = "quantity";
 
     // Variables.
 
@@ -51,6 +52,8 @@ public abstract class MakerTool implements DTOSerializable<MakerToolDTO> {
     @OneToMany(targetEntity = Material.class, mappedBy = Material.MATERIAL_MAKER_TOOL)
     private List<Material> materials;
 
+    @Column(name = MAKER_TOOL_QUANTITY)
+    private Integer quantity;
 
     // Methods.
 
@@ -61,11 +64,12 @@ public abstract class MakerTool implements DTOSerializable<MakerToolDTO> {
         return Objects.equal(name, makerTool.name) &&
                 Objects.equal(description, makerTool.description) &&
                 Objects.equal(materials, makerTool.materials) &&
-                Objects.equal(reference, makerTool.reference);
+                Objects.equal(reference, makerTool.reference) &&
+                Objects.equal(quantity, makerTool.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name, description, materials, reference);
+        return Objects.hashCode(name, description, materials, reference, quantity);
     }
 }
