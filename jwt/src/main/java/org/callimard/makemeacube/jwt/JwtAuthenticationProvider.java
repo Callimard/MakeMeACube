@@ -38,8 +38,6 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
 
             return auth;
         } catch (JWTVerificationException | JsonProcessingException e) {
-            log.warn("Jwt authentication fail -> Details: {} / Reason: {}",
-                     authentication.getDetails() != null ? authentication.getDetails().toString() : null, e.getMessage());
             throw new BadCredentialsException("Jwt is not correct", e);
         }
     }

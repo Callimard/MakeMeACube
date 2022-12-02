@@ -1,15 +1,22 @@
 package org.callimard.makemeacube.user_management.management;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.callimard.makemeacube.common.api.ApiV1;
 import org.callimard.makemeacube.jwt.JwtAccount;
 import org.callimard.makemeacube.jwt.aop.RequiresJwtAuthentication;
+import org.callimard.makemeacube.models.dto.BasicUserInformationDTO;
 import org.callimard.makemeacube.models.dto.UserDTO;
+import org.callimard.makemeacube.models.sql.MaterialType;
+import org.callimard.makemeacube.models.sql.Printer3DType;
 import org.callimard.makemeacube.models.sql.RegistrationProvider;
 import org.callimard.makemeacube.security.aop.PersonalAuthorisation;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@Slf4j
 @RequiredArgsConstructor
 @RestController
 @RequestMapping(ApiV1.USERS_URL)
@@ -29,6 +36,20 @@ public class UserManagementController {
     @PostMapping("/maker-registration")
     public UserDTO makerUserRegistration(@RequestBody UserManagementService.MakerUserRegistrationDTO makerUserRegistrationDTO) {
         return userManagementService.makerUserRegistration(makerUserRegistrationDTO, RegistrationProvider.LOCAL).toDTO();
+    }
+
+    @GetMapping("/makers")
+    public List<BasicUserInformationDTO> searchMakers(@RequestParam(name = "mail", required = false) String mail,
+                                                      @RequestParam(name = "pseudo", required = false) String pseudo,
+                                                      @RequestParam(name = "materialTypes", required = false) List<MaterialType> materialTypes,
+                                                      @RequestParam(name = "materialColors", required = false) List<String> materialColors,
+                                                      @RequestParam(name = "printer3DTypes", required = false) List<Printer3DType> printer3DTypes) {
+
+        log.debug("In SearchMakers mail {}, pseudo {}, materialsTypes {}, materialsColors {}, printer3DTypes {}", mail, pseudo,
+                  materialTypes, materialColors, printer3DTypes);
+
+        return userManagementService.searchMaker(mail, pseudo, materialTypes, materialColors, printer3DTypes)
+                .stream().map(BasicUserInformationDTO::new).toList();
     }
 
     @RequiresJwtAuthentication

@@ -27,20 +27,15 @@ public class SecurityAspect {
 
     @Before("@annotation(org.callimard.makemeacube.security.aop.PersonalAuthorisation)")
     public void personalAccessAuthorisation(JoinPoint joinPoint) {
-        log.debug("In personalAccessAuthorisation");
-
         var jwtAccount = getJwtAccount();
 
         MethodSignature mSignature = (MethodSignature) joinPoint.getSignature();
         Method m = mSignature.getMethod();
 
         PersonalAuthorisation personalAuthorisation = m.getAnnotation(PersonalAuthorisation.class);
-        log.debug("In personalAccessAuthorisation, jwt account = {}, userIdParameterName = {}", jwtAccount, personalAuthorisation.userIdParameterName());
         int parameterIndex = getUserIdParameterIndex(mSignature, personalAuthorisation.userIdParameterName());
 
         if (!Objects.equals(jwtAccount.getId(), joinPoint.getArgs()[parameterIndex])) {
-            log.debug("Unauthorized -> the user id param equals = {} and jwt account id = {}", joinPoint.getArgs()[parameterIndex],
-                      jwtAccount.getId());
             throw new UnauthorizedAccessException();
         }
     }

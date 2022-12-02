@@ -54,11 +54,11 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     private User createAndSaveUser(MakerUserRegistrationDTO makerInfo) {
-        var user = generateUser(makerInfo);
-        return userRepository.save(user);
+        var maker = generateMaker(makerInfo);
+        return userRepository.save(maker);
     }
 
-    private User generateUser(MakerUserRegistrationDTO makerInfo) {
+    private User generateMaker(MakerUserRegistrationDTO makerInfo) {
         return new User(-1,
                         makerInfo.mail(),
                         makerInfo.pseudo(),
@@ -91,6 +91,36 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Override
     public User getUser(@NotNull @UserId Integer userId) {
         return entitySearchingAspect.entityOf(User.class);
+    }
+
+    @Override
+    public List<User> searchMaker(String mail, String pseudo, List<MaterialType> materialTypes,
+                                  List<String> materialColors, List<Printer3DType> printer3DTypes) {
+
+        var builder = new UserSpecificationBuilder();
+
+        if (mail != null)
+            builder.addEqualMailSpecification(mail);
+
+        if (pseudo != null)
+            builder.addEqualPseudoSpecification(pseudo);
+
+        if (materialTypes != null && !materialTypes.isEmpty())
+            builder.addEqualMaterialTypesSpecification(materialTypes);
+
+        if (materialColors != null && !materialColors.isEmpty())
+            builder.addMaterialWithColorSpecifications(materialColors);
+
+        if (printer3DTypes != null && !printer3DTypes.isEmpty())
+            builder.addPrinter3DTypeSpecification(printer3DTypes);
+
+        var specification = builder.build();
+
+        if (specification.isEmpty()) {
+            return Lists.newArrayList();
+        }
+
+        return userRepository.findAll(specification.get());
     }
 
     @SearchUsers
