@@ -87,7 +87,6 @@ public class PhoneVerifier implements ConstraintValidator<ValidPhone, String> {
                 return pFormatter.permissiveFormat(phone);
         }
 
-        log.debug("No PhoneFormatter find for the phone number -> {}", phone);
         throw new UnsupportedPhoneNumberException("The phone number is not supported");
     }
 
@@ -122,7 +121,7 @@ public class PhoneVerifier implements ConstraintValidator<ValidPhone, String> {
     }
 
     private static String extractDigit(String phone) {
-        return phone.replaceAll("[^0-9]+", "");
+        return phone.replaceAll("\\d+", "");
     }
 
     // Inner classes.

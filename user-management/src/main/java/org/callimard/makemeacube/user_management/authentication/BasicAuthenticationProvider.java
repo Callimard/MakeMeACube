@@ -31,14 +31,11 @@ public class BasicAuthenticationProvider implements AuthenticationProvider {
         var username = authentication.getName();
         var password = (String) authentication.getCredentials();
 
-        log.info("Try basic authentication for {}", username);
-
         User user = searchUser(username);
 
         if (checkPassword(password, user)) {
             return UsernamePasswordAuthenticationToken.authenticated(user, password, Lists.newArrayList());
         } else {
-            log.warn("Fail basic authentication for {} (wrong password)", username);
             throw new BadCredentialsException("Unknown username or password");
         }
     }
@@ -54,7 +51,6 @@ public class BasicAuthenticationProvider implements AuthenticationProvider {
 
         // Unknown mail or pseudo
         if (user.isEmpty()) {
-            log.warn("Fail basic authentication for {} (unknown mail or pseudo)", username);
             throw new BadCredentialsException("Unknown username or password");
         }
 
