@@ -33,6 +33,7 @@ public class User implements DTOSerializable<UserDTO> {
     public static final String USER_LAST_NAME = "lastName";
     public static final String USER_PHONE = "phone";
     public static final String USER_IS_MAKER = "isMaker";
+    public static final String USER_TOOLS = "tools";
     public static final String USER_MAKER_DESCRIPTION = "makerDescription";
     public static final String USER_PROVIDER = "provider";
     public static final String USER_CREATION_DATE = "creationDate";
@@ -136,6 +137,15 @@ public class User implements DTOSerializable<UserDTO> {
     @Override
     public int hashCode() {
         return Objects.hashCode(mail, pseudo, password, firstName, lastName, addresses, phone, isMaker, makerDescription, tools);
+    }
+
+    public float gradeAverage() {
+        if (grades.isEmpty()) {
+            return -1.0f;
+        }
+
+        int sum = grades.stream().map(UserEvaluation::getGrade).reduce(Integer::sum).orElse(0);
+        return (float) sum / (float) grades.size();
     }
 
     public Optional<UserAddress> getUserAddressWith(@NonNull @UserAddressId Integer userAddressId) {

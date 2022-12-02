@@ -61,6 +61,9 @@ public interface UserManagementService {
 
     User getUser(@NotNull @UserId Integer userId);
 
+    List<User> searchMaker(String mail, String pseudo, List<MaterialType> materialTypes, List<String> materialColors,
+                           List<Printer3DType> printer3DTypes);
+
     record UserUpdatedInformation(@NotNull @NotBlank @Size(min = 5, max = 255) String pseudo,
                                   @Size(max = 255) String firstName,
                                   @Size(max = 255) String lastName,

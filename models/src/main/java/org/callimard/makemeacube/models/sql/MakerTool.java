@@ -26,6 +26,7 @@ public abstract class MakerTool implements DTOSerializable<MakerToolDTO> {
     public static final String MAKER_TOOL_NAME = "name";
     public static final String MAKER_TOOL_DESCRIPTION = "description";
     public static final String MAKER_TOOL_REFERENCE = "reference";
+    public static final String MAKER_TOOL_MATERIALS = "materials";
     public static final String MAKER_TOOL_QUANTITY = "quantity";
 
     // Variables.
