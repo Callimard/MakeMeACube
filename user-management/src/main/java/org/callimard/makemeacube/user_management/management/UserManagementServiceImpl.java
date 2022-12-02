@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.time.Instant;
 import java.util.List;
+import java.util.Locale;
 
 @RequiredArgsConstructor
 @Validated
@@ -39,7 +40,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Override
     public User basicUserRegistration(@NotNull @Valid BasicUserRegistrationDTO userInfo, @NotNull RegistrationProvider provider) {
         // TODO Manage the email verification
-        var user = new User(userInfo.mail(), userInfo.pseudo(),
+        var user = new User(userInfo.mail().toLowerCase(Locale.FRENCH), userInfo.pseudo().toLowerCase(Locale.FRENCH),
                             passwordEncoder.encode(userInfo.password()), provider, Instant.now());
         return userRepository.save(user);
     }
@@ -60,8 +61,8 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     private User generateMaker(MakerUserRegistrationDTO makerInfo) {
         return new User(-1,
-                        makerInfo.mail(),
-                        makerInfo.pseudo(),
+                        makerInfo.mail().toLowerCase(Locale.FRENCH),
+                        makerInfo.pseudo().toLowerCase(Locale.FRENCH),
                         passwordEncoder.encode(makerInfo.password()),
                         makerInfo.firstName(),
                         makerInfo.lastName(),

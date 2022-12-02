@@ -13,6 +13,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.util.Locale;
+
 @Slf4j
 @RequiredArgsConstructor
 @Component
@@ -41,12 +43,10 @@ public class BasicAuthenticationProvider implements AuthenticationProvider {
     }
 
     private User searchUser(String username) {
-        // Search by mail
-        var user = userRepository.findByMail(username);
+        var user = userRepository.findByMail(username.toLowerCase(Locale.FRENCH));
 
         if (user.isEmpty()) {
-            // Search by pseudo
-            user = userRepository.findByPseudo(username);
+            user = userRepository.findByPseudo(username.toLowerCase(Locale.FRENCH));
         }
 
         // Unknown mail or pseudo
