@@ -10,6 +10,7 @@
         <module>proxy-service</module>
         <module>common</module>
         <module>security</module>
+        <module>ui-frontend</module>
     </modules>
 
     <parent>
