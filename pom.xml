@@ -10,6 +10,7 @@
         <module>proxy-service</module>
         <module>common</module>
         <module>security</module>
+        <module>chat</module>
         <module>ui-frontend</module>
     </modules>
 
@@ -87,6 +88,20 @@
                 <groupId>commons-validator</groupId>
                 <artifactId>commons-validator</artifactId>
                 <version>1.7</version>
+            </dependency>
+
+            <!-- Jackson -->
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>2.14.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>2.14.1</version>
             </dependency>
 
             <!-- Spring -->

@@ -4,7 +4,7 @@ server:
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
 
 jwt:
   secret: 4yh7zIam9FlUZPOZDvyGTQM72JLR9fp1Lek

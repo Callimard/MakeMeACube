@@ -1,6 +1,16 @@
 spring:
   cloud:
     gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:4200"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 1800
       discovery:
         locator:
           enabled: true
@@ -14,3 +24,7 @@ spring:
           uri: lb://user-management-service
           predicates:
             - Path=/api/v1/users/**
+        - id: chat-route
+          uri: lb://chat-service
+          predicates:
+            - Path=/app/**, /chat/**, /topic/**
